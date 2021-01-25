@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+require('dotenv').config();
 
 const app = express();
 
@@ -19,6 +20,9 @@ const setFile = (dir) => {
 };
 
 const Init = async () => {
+
+    require('./Database/Init')();
+
     const routes = fs.readdirSync(__dirname + '/Routes');
     routes.forEach(route => {
         if(route.endsWith('.js')) setFile(__dirname + '/Routes/' + route);
