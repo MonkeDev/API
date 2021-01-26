@@ -10,8 +10,21 @@ const facts = mongo.model('facts', new mongo.Schema({
     data: { type: Array, default: [] }
 }));
 
+const users = mongo.model('users', new mongo.Schema({
+    id: { type: String },
+    key: { type: String, required: false },
+    ratelimit: {
+        max: { type: Number, default: 200 },
+        used: { type: Number, default: 0 }
+    },
+    stats: {
+        total: { type: Number, default: 0 }
+    }
+}));
+
 
 module.exports = {
     imagesAndGifs,
-    facts
+    facts,
+    users
 }
