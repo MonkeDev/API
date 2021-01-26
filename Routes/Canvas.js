@@ -3,6 +3,22 @@ const canvas = require('canvas');
 const path = require('path');
 
 
+/**
+ * @swagger
+ * /canvas/gay:
+ *   get:
+ *     description: Make a image gay
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: imgUrl
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 router.get('/gay', async (req, res) => {
     const gay = await canvas.loadImage(path.join(__dirname + '../../Assets', 'gay.png'));
     const imgUrl = req.urlParams.imgUrl;
@@ -16,7 +32,7 @@ router.get('/gay', async (req, res) => {
     try{
         toLayer = await canvas.loadImage(imgUrl);
     } catch (err) {
-        return res.json({
+        return res.status(400).json({
             error: true,
             message: 'Failed to load image.'
         });
@@ -29,7 +45,7 @@ router.get('/gay', async (req, res) => {
     ctx.drawImage(gay, 0, 0, Canvas.width, Canvas.height);
 
     res.set({'Content-Type': 'image/png'});
-    res.send(Canvas.toBuffer());
+    res.status(200).send(Canvas.toBuffer());
 });
 
 

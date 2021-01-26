@@ -2,6 +2,8 @@ const express = require('express');
 const fs = require('fs');
 const url = require('url');
 const querystring = require('querystring');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
 require('dotenv').config();
 
 const app = express();
@@ -15,6 +17,20 @@ app.use((req, res, next) => {
     req.urlParams = parsedQs;
     next();
 })
+
+
+const swaggerOptions = {
+    swaggerDefinition: {
+        info: {
+            title: `MonkeDev - API`,
+            description: 'The MonkeDev API'
+        },
+        servers: ['https://api.monke.vip/']
+    },
+    apis: [__dirname + '/Routes/*.js']    
+};
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 const setFolder = (dir) => {
     const routes = fs.readdirSync(dir);

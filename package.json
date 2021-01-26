@@ -20,8 +20,11 @@
     "canvas": "^2.6.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "install": "^0.13.0",
     "mongoose": "^5.11.13",
-    "querystring": "^0.2.0"
+    "querystring": "^0.2.0",
+    "swagger-jsdoc": "^6.0.1",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "node-fetch": "^2.6.1"
