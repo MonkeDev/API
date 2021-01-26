@@ -3,25 +3,22 @@ const db = new (require('../Database/Manager'))(require('../Database/Schema').fa
 
 const facts = ['dog', 'cat'];
 
-/**
- * @swagger
- * /facts/dog:
- *  get:
- *    description: Get a random dog fact!
- *    tags: [facts]
- *    responses:
- *      '200':
- *        description: Success
- *      '400':
- *        description: Error
-*/
 
 /**
  * @swagger
  * /facts/cat:
  *  get:
  *    description: Get a random cat fact!
- *    tags: [facts]
+ *    tags: [Facts]
+ *    responses:
+ *      '200':
+ *        description: Success
+ *      '400':
+ *        description: Error
+ * /facts/dog:
+ *  get:
+ *    description: Get a random dog fact!
+ *    tags: [Facts]
  *    responses:
  *      '200':
  *        description: Success
