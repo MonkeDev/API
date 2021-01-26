@@ -21,7 +21,7 @@ const facts = ['dog', 'cat'];
  * /facts/cat:
  *  get:
  *    description: Get a random cat fact!
- *    tags: [facts]
+ *    tags: [Facts]
  *    responses:
  *      '200':
  *        description: Success
