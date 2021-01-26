@@ -59,3 +59,5 @@ const Init = async () => {
 };
 
 Init();
+
+console.log('plz be here')
