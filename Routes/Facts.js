@@ -9,7 +9,7 @@ const facts = ['dog', 'cat'];
  * /facts/cat:
  *  get:
  *    description: Get a random cat fact!
- *    tags: [facts, cat]
+ *    tags: [Facts]
  *    responses:
  *      '200':
  *        description: Success
@@ -18,7 +18,7 @@ const facts = ['dog', 'cat'];
  * /facts/dog:
  *  get:
  *    description: Get a random dog fact!
- *    tags: [facts, dog]
+ *    tags: [Facts]
  *    responses:
  *      '200':
  *        description: Success
