@@ -6,4 +6,4 @@ api.monke.vip
 #### /cat
 
 ## /canvas
-#### /gay?imgUrl=<Your img url>
+#### /gay?imgUrl=[Your img url]
