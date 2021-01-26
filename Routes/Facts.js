@@ -28,6 +28,8 @@ const facts = ['dog', 'cat'];
  *      '400':
  *        description: Error
  */
+
+console.log('why')
 facts.forEach(fact => {
     router.get('/' + fact, async (req, res) => {
         const data = await db.get(fact);
