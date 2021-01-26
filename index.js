@@ -1,11 +1,20 @@
 const express = require('express');
 const fs = require('fs');
+const url = require('url');
+const querystring = require('querystring');
 require('dotenv').config();
 
 const app = express();
 
 const port = process.env.PORT || 8080;
 
+app.use('/static', express.static('public'));
+
+app.use((req, res, next) => {
+    const parsedQs = querystring.parse(url.parse('https://api.monke.vip' + req.originalUrl).query);
+    req.urlParams = parsedQs;
+    next();
+})
 
 const setFolder = (dir) => {
     const routes = fs.readdirSync(dir);

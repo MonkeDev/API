@@ -5,9 +5,13 @@ router.get('/', (req, res) => {
         facts: {
             dog: '/facts/dog',
             cat: '/facts/cat'
+        },
+        canvas: {
+            gay: '/canvas/gay?imgUrl=<your img url>'
         }
-    })
+    });
 });
+
 
 module.exports = {
     end: '/',
