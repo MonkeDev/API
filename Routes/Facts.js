@@ -14,7 +14,7 @@ const facts = ['dog', 'cat'];
  *        description: Success
  *      '400':
  *        description: Error
- */
+*/
 
 /**
  * @swagger
@@ -27,9 +27,8 @@ const facts = ['dog', 'cat'];
  *        description: Success
  *      '400':
  *        description: Error
- */
+*/
 
-console.log('why')
 facts.forEach(fact => {
     router.get('/' + fact, async (req, res) => {
         const data = await db.get(fact);
