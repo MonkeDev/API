@@ -12,7 +12,7 @@ const facts = mongo.model('facts', new mongo.Schema({
 
 const users = mongo.model('users', new mongo.Schema({
     id: { type: String },
-    key: { type: String, required: false },
+    key: { type: String },
     ratelimit: {
         max: { type: Number, default: 300 },
         used: { type: Number, default: 0 }

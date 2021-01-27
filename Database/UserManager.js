@@ -29,9 +29,8 @@ module.exports = class {
     doSave(data) {
         if(!data.fromSave) data.fromSave = 0;
         if(data.fromSave > 5){
-            delete data.fromSave;
-            data.save();
-            data.fromSave = 0;
+            data.fromSave = null;
+            data.save().then(() => data.fromSave = 0);
         } else data.fromSave++;
     }
 
