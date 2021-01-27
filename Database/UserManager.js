@@ -9,6 +9,7 @@ module.exports = class {
 
         s.find().then(Data => {
             Data.forEach(d => {
+                d.ratelimit.used = 0;
                 this.cache.id.set(d.id, d);
                 if(d.key) this.cache.key.set(d.key, d);
             });
@@ -28,6 +29,7 @@ module.exports = class {
     doSave(data) {
         if(!data.fromSave) data.fromSave = 0;
         if(data.fromSave > 5){
+            delete data.fromSave;
             data.save();
             data.fromSave = 0;
         } else data.fromSave++;
@@ -38,7 +40,7 @@ module.exports = class {
         if(!data) {
             data = await s.findOne({id: id});
             this.cache.id.set(id, data);
-        } else doSave(data);
+        } else this.doSave(data);
         return data;
     };
 
@@ -47,17 +49,17 @@ module.exports = class {
         if(!data) {
             data = await s.findOne({key: key});
             this.cache.key.set(key, key);
-        } else doSave(data);
+        } else this.doSave(data);
         return data;
     };
 
     async create(id) {
-        const key = this.makeKey(15);
+        const key = this.makeKey(25);
         const data = await new s({id: id, key: key}).save();
         this.cache.id.set(id, data)
         this.cache.key.set(key, data);
         return data;
-    }
+    };
 
 
 };

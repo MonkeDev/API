@@ -1,5 +1,5 @@
 const prefix = process.env.botPrefix;
-const users = new (require('../Database/UserManager'));
+const users = process.s;
 module.exports = async (bot, msg) => {
 
     if(!msg.content.startsWith(prefix) || msg.author.bot || !msg.channel.guild);
