@@ -20,16 +20,14 @@ module.exports = async (req, res, next) => {
             return res.json({error: true, message: `You have been ratelimited (${keyData.ratelimit.max}/m), If you want this number higher join our discord server and ask! (https://monke.vip/discord)`})
         } else {
             keyData.ratelimit.used++;
-            console.log(keyData.ratelimit.used)
             setTimeout(() => {
                 keyData.ratelimit.used -= 1;
-                console.log(keyData.ratelimit.used)
             }, 60 * 1000);
         }
     } else {
         let endData = await endPoints.get(endPoint);
         if(!endData) {
-            endPoints.set(endPoint, { max: 200, used: 0 });
+            endPoints.set(endPoint, { max: 500, used: 0 });
             endData = await endPoints.get(endPoint);
         };
         
