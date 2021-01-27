@@ -4,7 +4,7 @@ const url = require('url');
 const querystring = require('querystring');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
-const rateLimter = require('./util/RateLimter');
+const rateLimter = require('./util/RateLimiter');
 process.s = new (require('./Database/UserManager'))();
 require('dotenv').config();
 

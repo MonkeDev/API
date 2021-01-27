@@ -24,13 +24,27 @@ module.exports = async (req, res, next) => {
             setTimeout(() => {
                 keyData.ratelimit.used -= 1;
                 console.log(keyData.ratelimit.used)
-            }, 30 * 1000);
+            }, 60 * 1000);
         }
     } else {
+        let endData = await endPoints.get(endPoint);
+        if(!endData) {
+            endPoints.set(endPoint, { max: 200, used: 0 });
+            endData = await endPoints.get(endPoint);
+        };
+        
+        if(endData.used > endData.max) {
+            return res.json({error: true, message: `This endPoint is at its max of ${endData.max} request per minute, You can use a API key to bypass this. Join our discord server (https://monke.vip/discord) to get your key for FREE.`});
+        } else {
+            endData.used++;
+            setTimeout(() => {
+                endData.used -= 1;
+            }, 60 * 1000);
+        };
 
     }
 
 
-    next()
+    next();
 
 }

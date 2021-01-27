@@ -17,8 +17,8 @@ module.exports = async (bot, msg) => {
         bot.getDMChannel(msg.author.id).then(c => {
             c.createMessage(`**___MonkeDev - API___**\nID: \`${userData.id}\`\nKEY: \`${userData.key}\``).catch(() => {
                 message.edit('Please enable your DMs so I can dm you your info!')
-            })
-        })
-    }
+            });
+        });
+    };
 
 }
