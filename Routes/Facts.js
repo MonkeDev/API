@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const db = new (require('../Database/Manager'))(require('../Database/Schema').facts);
 
-const facts = ['dog', 'cat'];
+const facts = ['dog', 'cat', 'monkey'];
 
 
 /**
@@ -23,6 +23,20 @@ const facts = ['dog', 'cat'];
  * /facts/dog:
  *  get:
  *    description: Get a random dog fact!
+ *    tags: [Facts]
+ *    parameters:
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *    responses:
+ *      '200':
+ *        description: Success
+ *      '400':
+ *        description: Error
+ * /facts/monkey:
+ *  get:
+ *    description: Get a random monkey fact!
  *    tags: [Facts]
  *    parameters:
  *       - name: key
