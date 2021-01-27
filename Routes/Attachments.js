@@ -4,10 +4,10 @@ const db = new (require('../Database/Manager'))(require('../Database/Schema').im
 
 /**
  * @swagger
- * /imagesandgifs/monkey:
+ * /attachments/monkey:
  *  get:
  *    description: Get a random monkey image/gif!
- *    tags: [ImagesAndGifs]
+ *    tags: [Attachments]
  *    parameters:
  *       - name: key
  *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
@@ -30,6 +30,6 @@ router.get('/monkey', async (req, res) => {
 
 
 module.exports = {
-    end: '/imagesandgifs/',
+    end: '/attachments/',
     router,
 };
