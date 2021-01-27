@@ -63,7 +63,12 @@ module.exports = async (bot, msg) => {
     };
 
     if(cmd == 'top') {
-        let allUsers = await users.schema.find();
+        let allUsers = []
+        await users.cache.id.forEach(user => {
+            allUsers.push(user);
+        });
+
+        allUsers = await users.schema.find();
         allUsers = allUsers.sort((a, b) => b.stats.total-a.stats.total);
         allUsers = allUsers.slice(0, 17);
         let desc = '';
@@ -76,5 +81,6 @@ module.exports = async (bot, msg) => {
             description: desc,
             color: 0xf7c38e
         }});
+
     };
 }
