@@ -10,7 +10,10 @@ module.exports = class {
 
         s.find().then(Data => {
             Data.forEach(d => {
-                d.ratelimit.used = 0;
+                if(d.ratelimit.used != 0) {
+                    d.ratelimit.used = 0;
+                    d.save();
+                };
                 this.cache.id.set(d.id, d);
                 if(d.key) this.cache.key.set(d.key, d);
             });

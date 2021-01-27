@@ -69,12 +69,12 @@ module.exports = async (bot, msg) => {
         let desc = '';
         await allUsers.forEach(user => {
             desc += `<@!${user.id}>, ${user.stats.total}\n`
-        })
+        });
 
         msg.channel.createMessage({embed: {
             title: 'Top users',
             description: desc,
             color: 0xf7c38e
-        }})
-    }
+        }});
+    };
 }
