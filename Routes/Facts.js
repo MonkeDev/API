@@ -10,6 +10,11 @@ const facts = ['dog', 'cat'];
  *  get:
  *    description: Get a random cat fact!
  *    tags: [Facts]
+ *    parameters:
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
  *    responses:
  *      '200':
  *        description: Success
@@ -19,6 +24,11 @@ const facts = ['dog', 'cat'];
  *  get:
  *    description: Get a random dog fact!
  *    tags: [Facts]
+ *    parameters:
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
  *    responses:
  *      '200':
  *        description: Success
