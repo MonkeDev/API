@@ -4,14 +4,12 @@ const url = require('url');
 const querystring = require('querystring');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
-const expressip = require('express-ip');
 require('dotenv').config();
 
 const app = express();
 
 const port = process.env.PORT || 8080;
 
-app.set('trust proxy', '173.245.54.136');
 
 app.use('/static', express.static('public'));
 
@@ -21,7 +19,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(expressip().getIpInfoMiddleware);
 
 const swaggerOptions = {
     swaggerDefinition: {
