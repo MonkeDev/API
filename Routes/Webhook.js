@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 
 router.post('/heroku_logs', (req, res) => {
-    res.json(req);
+    console.log(req);
 })
 
 
