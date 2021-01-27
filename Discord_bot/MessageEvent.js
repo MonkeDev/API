@@ -52,6 +52,6 @@ module.exports = async (bot, msg) => {
     if(cmd == 'stats') {
         const userData = await users.getID(msg.author.id);
         if(!userData) return msg.channel.createMessage(`You are not registered, \`${prefix}register\``);
-        msg.channel.createMessage(`You have made a request to our API ${userData.stats.total} time(s)`);
+        msg.channel.createMessage(`**__Request__**:\n\u3000Total: ${userData.stats.total}\n**__rate limit__**\n\u3000Max: ${userData.ratelimit.max}\n\u3000Used: ${userData.ratelimit.used}`);
     };
 }
