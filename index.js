@@ -11,7 +11,7 @@ const app = express();
 
 const port = process.env.PORT || 8080;
 
-app.set('trust proxy')
+app.set('trust proxy', '173.245.54.136');
 
 app.use('/static', express.static('public'));
 
