@@ -40,6 +40,7 @@ module.exports = class {
         if(!data) {
             data = await s.findOne({id: id});
             this.cache.id.set(id, data);
+            data = await this.cache.id.get(id);
         } else this.doSave(data);
         return data;
     };
@@ -49,6 +50,7 @@ module.exports = class {
         if(!data) {
             data = await s.findOne({key: key});
             this.cache.key.set(key, data);
+            data = await this.cache.key.get(key);
         } else this.doSave(data);
         return data;
     };
