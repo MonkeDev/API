@@ -7,6 +7,7 @@ const helpMessage =
 \`${prefix}info\` -  Get your API key.
 \`${prefix}stats\` - See your request stats.
 \`${prefix}update\`- Updates your cache.
+\`${prefix}top\` - See the top API users.
 `
 module.exports = async (bot, msg) => {
 
@@ -60,4 +61,20 @@ module.exports = async (bot, msg) => {
         users.cache.id.delete(msg.author.id);
         msg.channel.createMessage('Your cache has been cleared!');
     };
+
+    if(cmd == 'top') {
+        let allUsers = await users.schema.find();
+        allUsers = allUsers.sort((a, b) => b.stats.total-a.stats.total);
+        allUsers = allUsers.slice(0, 17);
+        let desc = '';
+        await allUsers.forEach(user => {
+            desc += `<@!${user.id}>, ${user.stats.total}\n`
+        })
+
+        msg.channel.createMessage({embed: {
+            title: 'Top users',
+            description: desc,
+            color: 0xf7c38e
+        }})
+    }
 }
