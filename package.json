@@ -22,6 +22,7 @@
     "eris": "^0.14.0",
     "express": "^4.17.1",
     "install": "^0.13.0",
+    "jimp": "^0.16.1",
     "mongoose": "^5.11.13",
     "querystring": "^0.2.0",
     "swagger-jsdoc": "^6.0.1",
