@@ -4,6 +4,7 @@ const url = require('url');
 const querystring = require('querystring');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
+const expressip = require('express-ip');
 require('dotenv').config();
 
 const app = express();
@@ -16,8 +17,9 @@ app.use((req, res, next) => {
     const parsedQs = querystring.parse(url.parse('https://api.monke.vip' + req.originalUrl).query);
     req.urlParams = parsedQs;
     next();
-})
+});
 
+app.use(expressip().getIpInfoMiddleware);
 
 const swaggerOptions = {
     swaggerDefinition: {

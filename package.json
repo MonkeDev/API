@@ -21,6 +21,7 @@
     "dotenv": "^8.2.0",
     "eris": "^0.14.0",
     "express": "^4.17.1",
+    "express-ip": "^1.0.4",
     "install": "^0.13.0",
     "mongoose": "^5.11.13",
     "querystring": "^0.2.0",

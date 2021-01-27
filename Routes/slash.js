@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 */
 
 router.get('/ip', (req, res) => {
-    res.json({ip: req.ip, ips: req.ips});
+    res.send(req.ipInfo);
 })
 router.get('/', (req, res) => {
     res.redirect('/docs')
