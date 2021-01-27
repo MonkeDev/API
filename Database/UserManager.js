@@ -2,6 +2,7 @@ const s = require('./Schema').users;
 
 module.exports = class {
     constructor() {
+        this.schema = s;
         this.cache = {
             id: new Map(),
             key: new Map()

@@ -6,6 +6,7 @@ const helpMessage =
 \`${prefix}register\` - Register and get your API key.
 \`${prefix}info\` -  Get your API key.
 \`${prefix}stats\` - See your request stats.
+\`${prefix}update\`- Updates your cache.
 `
 module.exports = async (bot, msg) => {
 
@@ -53,5 +54,10 @@ module.exports = async (bot, msg) => {
         const userData = await users.getID(msg.author.id);
         if(!userData) return msg.channel.createMessage(`You are not registered, \`${prefix}register\``);
         msg.channel.createMessage(`**__Request__**:\n\u3000Total: ${userData.stats.total}\n**__rate limit__**\n\u3000Max: ${userData.ratelimit.max}\n\u3000Used: ${userData.ratelimit.used}`);
+    };
+
+    if(cmd == 'update') {
+        users.cache.id.delete(msg.author.id);
+        msg.channel.createMessage('Your cache has been cleared!');
     };
 }
