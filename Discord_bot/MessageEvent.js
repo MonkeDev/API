@@ -2,7 +2,7 @@ const prefix = process.env.botPrefix;
 const users = process.s;
 module.exports = async (bot, msg) => {
 
-    if(!msg.content.startsWith(prefix) || msg.author.bot || !msg.channel.guild);
+    if(!msg.content.startsWith(prefix) || msg.author.bot || !msg.channel.guild) return;
 
     let args = msg.content.split(/ +/)
     const cmd = args[0].toLowerCase().slice(prefix.length);
