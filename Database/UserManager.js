@@ -45,7 +45,6 @@ module.exports = class {
 
     async getKey(key){
         let data = await this.cache.key.get(key);
-        console.log(data)
         if(!data) {
             data = await s.findOne({key: key});
             this.cache.key.set(key, data);
