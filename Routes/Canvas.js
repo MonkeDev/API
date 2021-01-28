@@ -211,12 +211,10 @@ router.get('/sepia', async (req, res) => {
  *       - name: x
  *         description: The new width of the image
  *         in: query
- *         required: true
  *         type: string
  *       - name: y
  *         description: The new height of the image
  *         in: query
- *         required: true
  *         type: string
  *       - name: key
  *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
@@ -245,7 +243,7 @@ router.get('/resize', async (req, res) => {
     });
 
     if(y) {
-        y = parseInt(y);
+        y = Number(y);
         if(!y) return res.status(400).json({
             error: true,
             message: 'Param y is not a number.'
@@ -256,7 +254,7 @@ router.get('/resize', async (req, res) => {
         });
     };
     if(x) {
-        x = parseInt(x);
+        x = Number(x);
         if(!x) return res.status(400).json({
             error: true,
             message: 'Param x is not a number.'
@@ -282,6 +280,75 @@ router.get('/resize', async (req, res) => {
     res.status(200).send(await img.getBufferAsync('image/png'));
 });
 
+/**
+ * @swagger
+ * /canvas/contrast:
+ *   get:
+ *     description: Add a contrast filter to a image
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: imgUrl
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: val
+ *         description: The contrast by a value -1 to +1
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+router.get('/contrast', async (req, res) => {
+
+    const imgUrl = req.urlParams.imgUrl;
+    let val = req.urlParams.val;
+
+    if(!imgUrl) return res.status(400).json({
+        error: true,
+        message: 'Missing imgUrl param.'
+    });
+    if(!val) return res.status(400).json({
+        error: true,
+        message: 'Missing val param.'
+    });
+
+    val = Number(val);
+    if(!val) return res.status(400).json({
+        error: true,
+        message: 'val param is not a number.'
+    });
+
+    if(val > 1 || val < -1) {
+        return res.status(400).json({
+            error: true,
+            message: 'val param most have a value of -1 to +1.'
+        });
+    };
+
+    let img;
+    try{
+        img = await jimp.read(imgUrl);
+    } catch (err) {
+        return res.status(400).json({
+            error: true,
+            message: 'Failed to load image.'
+        });
+    };
+
+    img.contrast(val);
+    res.set({'Content-Type': 'image/png'});
+    res.status(200).send(await img.getBufferAsync('image/png'));
+
+})
 
 module.exports = {
     end: '/canvas/',
