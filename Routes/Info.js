@@ -1,6 +1,23 @@
 const router = require('express').Router();
 
 
+/**
+ * @swagger
+ * /info/ratelimit:
+ *   get:
+ *     description: View your rate limit
+ *     tags: [Info]
+ *     parameters:
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 router.get('/ratelimit', (req, res) => {
     if(req.keyData) {
         res.status(200).json({
