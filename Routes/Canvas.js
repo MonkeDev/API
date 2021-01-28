@@ -321,8 +321,8 @@ router.get('/contrast', async (req, res) => {
         message: 'Missing val param.'
     });
 
-    val = Number(val);
-    if(!val) return res.status(400).json({
+    val = Number(val) || parseInt(val);
+    if(val != 0 && !val) return res.status(400).json({
         error: true,
         message: 'val param is not a number.'
     });
@@ -394,6 +394,8 @@ router.get('/dither565', async (req, res) => {
     res.set({'Content-Type': 'image/png'});
     res.status(200).send(await img.getBufferAsync('image/png'));
 });
+
+
 
 module.exports = {
     end: '/canvas/',
