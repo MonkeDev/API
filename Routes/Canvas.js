@@ -350,6 +350,51 @@ router.get('/contrast', async (req, res) => {
 
 })
 
+/**
+ * @swagger
+ * /canvas/dither565:
+ *   get:
+ *     description: Add a dither565 filter to a image
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: imgUrl
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+router.get('/dither565', async (req, res) => {
+    const imgUrl = req.urlParams.imgUrl;
+
+    if(!imgUrl) return res.status(400).json({
+        error: true,
+        message: 'Missing imgUrl param'
+    });
+
+    let img;
+    try{
+        img = await jimp.read(imgUrl);
+    } catch (err) {
+        return res.status(400).json({
+            error: true,
+            message: 'Failed to load image.'
+        });
+    };
+
+    img.dither565();
+    res.set({'Content-Type': 'image/png'});
+    res.status(200).send(await img.getBufferAsync('image/png'));
+});
+
 module.exports = {
     end: '/canvas/',
     router,
