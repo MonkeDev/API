@@ -14,12 +14,10 @@ router.get('/', (req, res) => {
 });
 */
 
-router.get('/headers', (req, res) => {
-    res.json(req.headers);
-})
+
 router.get('/', (req, res) => {
     res.redirect('/docs')
-})
+});
 
 
 module.exports = {

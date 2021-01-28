@@ -23,7 +23,10 @@ module.exports = async (req, res, next) => {
             setTimeout(() => {
                 keyData.ratelimit.used -= 1;
             }, 60 * 1000);
-        }
+        };
+
+        req.keyData = keyData;
+
     } else {
         let endData = await endPoints.get(endPoint);
         if(!endData) {
@@ -40,7 +43,11 @@ module.exports = async (req, res, next) => {
             }, 60 * 1000);
         };
 
-    }
+        req.endPoints = endPoints;
+
+    };
+
+    
 
 
     next();
