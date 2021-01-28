@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
 
     const s = process.s;
 
-    if(req.originalUrl.startsWith('/docs/') || req.originalUrl == '/') return next();
+    if(req.originalUrl.startsWith('/docs') || req.originalUrl == '/' || req.originalUrl == '/favicon.ico') return next();
 
     const key = req.urlParams.key;
     const endPoint = req.originalUrl.split('?')[0]
