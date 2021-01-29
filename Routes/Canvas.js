@@ -441,6 +441,55 @@ router.get('/circle', async (req, res) => {
     res.status(200).send(await img.getBufferAsync('image/png'));
 });
 
+/**
+ * @swagger
+ * /canvas/pixelate:
+ *   get:
+ *     description: Pixelate a image
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: imgUrl
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: val
+ *         description: The pixelate level
+ *         in: query
+ *         type: string
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+router.get('/pixelate', async (req, res) => {
+    const imgUrl = req.urlParams.imgUrl;
+    const val = req.urlParams.val;
+
+    if(!imgUrl) return res.status(400).json({
+        error: true,
+        message: 'Missing imgUrl param'
+    });
+
+    let img;
+    try{
+        img = await jimp.read(imgUrl);
+    } catch (err) {
+        return res.status(400).json({
+            error: true,
+            message: 'Failed to load image.'
+        });
+    };
+
+    img.pixelate(Number(val) || 10);
+    res.set({'Content-Type': 'image/png'});
+    res.status(200).send(await img.getBufferAsync('image/png'));
+});
 
 module.exports = {
     end: '/canvas/',
