@@ -491,6 +491,81 @@ router.get('/pixelate', async (req, res) => {
     res.status(200).send(await img.getBufferAsync('image/png'));
 });
 
+/**
+ * @swagger
+ * /canvas/80s:
+ *   get:
+ *     description: Well idk it just gives off a 80s vibe
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: imgUrl
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+router.get('/80s', async (req, res) => {
+    const imgUrl = req.urlParams.imgUrl;
+
+    if(!imgUrl) return res.json({
+        error: true,
+        message: 'Missing imgUrl param'
+    });
+
+
+    let userImg;
+    try{
+        userImg = await canvas.loadImage(imgUrl);
+    } catch (err) {
+        return res.status(400).json({
+            error: true,
+            message: 'Failed to load image.'
+        });
+    };
+    
+
+    
+    const Canvas = canvas.createCanvas(userImg.width, userImg.height);
+    const ctx = Canvas.getContext('2d');
+    
+    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+
+    const input = ctx.getImageData(0, 0, Canvas.width, Canvas.height);
+
+    const output = ctx.createImageData(Canvas.width, Canvas.height);
+
+    const w = input.width, h = input.height;
+    const inputData = input.data;
+    const outputData = output.data;
+
+    for (let y = 1; y < h-1; y++) {
+        for (let x = 1; x < w-1; x++) {
+          for (let c = 0; c < 3; c++) {
+            const i = (y*w + x)*4 + c;
+            outputData[i] = 127 + -inputData[i - w*4 - 4] -   inputData[i - w*4] - inputData[i - w*4 + 4] +
+                                  -inputData[i - 4]       + 8*inputData[i]       - inputData[i + 4] +
+                                  -inputData[i + w*4 - 4] -   inputData[i + w*4] - inputData[i + w*4 + 4];
+          }
+          outputData[(y*w + x)*4 + 3] = 255; // alpha
+        }
+    }
+
+    ctx.putImageData(output, 0, 0);
+
+    res.set({'Content-Type': 'image/png'});
+    res.status(200).send(Canvas.toBuffer());
+    
+});
+
 module.exports = {
     end: '/canvas/',
     router,
