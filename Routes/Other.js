@@ -27,6 +27,7 @@ router.post('/top.gg_vote', (req, res) => {
             content: req.urlParams.message || `<@!$USER_ID>, Thank you for voting for <@!$BOT_ID>!`
         }
     }
+    console.log(message);
 
     const toReplace = [
         {
