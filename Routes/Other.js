@@ -3,7 +3,37 @@ const { Client } = require('eris');
 const bot = new Client();
 
 
-
+/**
+ * @swagger
+ * /other/top.gg_vote:
+ *   post:
+ *     description: Top.gg vote logs with a discord webhook
+ *     tags: [Other]
+ *     parameters:
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *       - name: webhookToken
+ *         description: The token of the webhook to execute 
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: webhookID
+ *         description: The ID of the webhook to execute 
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: message
+ *         description: The message object to send to the webhook (https://discord.com/developers/docs/resources/webhook#execute-webhook), $USER_ID will be replaced with the voter's ID, $USER_ID will be replaced with the bot's ID, $IS_WEEKEND if it is the weekend it will be replaced with true if not false.
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 router.post('/top.gg_vote', (req, res) => {
 
     const webhookID = req.urlParams.webhookID;
@@ -43,7 +73,7 @@ router.post('/top.gg_vote', (req, res) => {
             message = JSON.parse(req.urlParams.message);
         } else {
             message = { 
-                content: req.urlParams.message || `<@!${req.body.user}>, Thank you for voting for <@!${req.body.bot}>!`
+                content: req.urlParams.message || `<@!${req.body.user || '000000000000000000'}>, Thank you for voting for <@!${req.body.bot || '000000000000000000'}>!`
             }
         }
 
