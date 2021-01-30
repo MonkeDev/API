@@ -21,7 +21,7 @@ router.post('/top.gg_vote', (req, res) => {
     
     let message;
     if(req.urlParams.message) {
-        message = req.urlParams.message;
+        message = JSON.parse(req.urlParams.message);
     } else {
         message = { 
             content: req.urlParams.message || `<@!$USER_ID>, Thank you for voting for <@!$BOT_ID>!`
