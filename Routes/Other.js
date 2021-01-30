@@ -43,10 +43,10 @@ router.post('/top.gg_vote', (req, res) => {
             message = JSON.parse(req.urlParams.message);
         } else {
             message = { 
-                content: req.urlParams.message || `<@!$USER_ID>, Thank you for voting for <@!$BOT_ID>!`
+                content: req.urlParams.message || `<@!${req.body.user}>, Thank you for voting for <@!${req.body.bot}>!`
             }
         }
-        
+
     } catch (err) {
         return res.status(400).json({
             error: true,
