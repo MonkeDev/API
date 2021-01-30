@@ -6,8 +6,6 @@ const bot = new Client();
 
 router.post('/top.gg_vote', (req, res) => {
 
-    console.log(req.body)
-
     const webhookID = req.urlParams.webhookID;
     if(!webhookID) return res.status(400).json({
         error: true,
@@ -48,7 +46,7 @@ router.post('/top.gg_vote', (req, res) => {
                 content: req.urlParams.message || `<@!$USER_ID>, Thank you for voting for <@!$BOT_ID>!`
             }
         }
-        console.log(message);
+        
     } catch (err) {
         return res.status(400).json({
             error: true,
