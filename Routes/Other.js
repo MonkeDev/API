@@ -18,16 +18,7 @@ router.post('/top.gg_vote', (req, res) => {
         error: true,
         message: 'A webhookToken was not provided.'
     });
-    
-    let message;
-    if(req.urlParams.message) {
-        message = JSON.parse(req.urlParams.message);
-    } else {
-        message = { 
-            content: req.urlParams.message || `<@!$USER_ID>, Thank you for voting for <@!$BOT_ID>!`
-        }
-    }
-    console.log(message);
+
 
     const toReplace = [
         {
@@ -43,19 +34,29 @@ router.post('/top.gg_vote', (req, res) => {
             out: req.body.isWeekend
         }
     ];
+    let message;
 
     try {
-
-        if(message === req.urlParams.message && typeof message == 'object') {
+        
+        if(req.urlParams.message) {
             toReplace.forEach(x => {
-                message.content = message.content.split(x.in).join(x.out);
+                req.urlParams.message = req.urlParams.message.split(x.in).join(x.out);
             });
+            message = JSON.parse(req.urlParams.message);
         } else {
-            toReplace.forEach(x => {
-                message.content = message.content.split(x.in).join(x.out);
-            });
-        };
+            message = { 
+                content: req.urlParams.message || `<@!$USER_ID>, Thank you for voting for <@!$BOT_ID>!`
+            }
+        }
+        console.log(message);
+    } catch (err) {
+        return res.status(400).json({
+            error: true,
+            message: 'Failed to parse message content.'
+        });
+    };
 
+    try {
         bot.executeWebhook(webhookID, webhookToken, message);
     } catch (err) {
         console.log(err)
@@ -65,19 +66,7 @@ router.post('/top.gg_vote', (req, res) => {
         });
     };   
     
-    
-    
-
-    /* 
-
-    console.log('BODY');
-    console.log(req.body);
-
-    console.log('HEADERS');
-    console.log(req.headers);
-
-    res.send('ok');
-    */
+    res.status(200).json({message: 'Sent'});
 });
 
 
