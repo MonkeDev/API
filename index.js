@@ -6,6 +6,7 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const rateLimter = require('./util/RateLimiter');
 process.s = new (require('./Database/UserManager'))();
+const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
 
 app.use(rateLimter);
 
+app.use(bodyParser.json);
 
 const swaggerOptions = {
     swaggerDefinition: {

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/MonkeDev/API#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "canvas": "^2.6.1",
     "dotenv": "^8.2.0",
     "eris": "^0.14.0",
