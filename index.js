@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 
 app.use(rateLimter);
 
-app.use(bodyParser.json);
+app.use(bodyParser.json());
 
 const swaggerOptions = {
     swaggerDefinition: {

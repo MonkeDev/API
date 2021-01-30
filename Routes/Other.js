@@ -10,7 +10,7 @@ router.post('/top.gg_vote', (req, res) => {
     console.log('HEADERS');
     console.log(req.headers);
 
-    res.send('ok')
+    res.send('ok');
 });
 
 
