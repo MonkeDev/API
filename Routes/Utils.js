@@ -29,18 +29,20 @@ router.get('/shuffle', async (req, res) => {
         error: true,
         message: 'Missing/Invalid content parameter'
     });
-                let arr = content.split("");
+    
+    const arr = content.split("");
 
-                    for(let i = arr.length - 1; i > 0; i = i - 1) {
-                        let num = Math.floor(Math.random() * (i + 1)),
-                        char = arr[i];
-                        arr[i] = arr[num]
-                        arr[num] = char
-                    }                
-            res.status(200).json({
-                result: arr.join('')
-            })
-    })
+    for(let i = arr.length - 1; i > 0; i = i - 1) {
+        let num = Math.floor(Math.random() * (i + 1)),
+        char = arr[i];
+        arr[i] = arr[num];
+        arr[num] = char;
+    }
+
+    res.status(200).json({
+        result: arr.join('')
+    });
+});
 
 module.exports = {
     end: '/utils/',
