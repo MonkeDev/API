@@ -25,7 +25,7 @@ const router = require('express').Router();
 router.get('/shuffle', async (req, res) => {
     const content = req.urlParams.content;
 
-    if(!content || typeof content !== String) return res.status(400).json({
+    if(!content || typeof content !== 'string') return res.status(400).json({
         error: true,
         message: 'Missing/Invalid content parameter'
     });
