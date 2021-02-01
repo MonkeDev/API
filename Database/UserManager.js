@@ -18,6 +18,19 @@ module.exports = class {
                 if(d.key) this.cache.key.set(d.key, d);
             });
         });
+
+        setInterval(() => {
+            s.find().then(Data => {
+                Data.forEach(d => {
+                    if(d.ratelimit.used != 0) {
+                        d.ratelimit.used = 0;
+                        d.save();
+                    };
+                    this.cache.id.set(d.id, d);
+                    if(d.key) this.cache.key.set(d.key, d);
+                });
+            });
+        }, 120 * 1000);
     }
 
     makeKey(length) {
@@ -65,6 +78,12 @@ module.exports = class {
         this.cache.key.set(key, data);
         return data;
     };
+
+    async update(data){
+        if(data.id) this.cache.id.set(data.id, data);
+        if(data.key) this.cache.key.set(data.key, data);
+        return await data.save();
+    }
 
 
 };

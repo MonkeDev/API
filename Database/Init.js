@@ -1,5 +1,5 @@
 const mongo = require('mongoose');
-module.exports = () => {
+module.exports = async () => {
     mongo.connect(process.env.mongoURI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -7,7 +7,11 @@ module.exports = () => {
         useFindAndModify: false
     });
 
-    mongo.connection.once('connected', () => {
-        console.log('MongoDB connected!');
-    });
+    await new Promise(res => {
+        mongo.connection.once('connected', () => {
+            console.log('MongoDB connected!');
+            res();
+        });
+    })
+    
 };

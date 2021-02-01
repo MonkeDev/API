@@ -5,7 +5,6 @@ const querystring = require('querystring');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const rateLimter = require('./util/RateLimiter');
-process.s = new (require('./Database/UserManager'))();
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
@@ -53,7 +52,8 @@ const setFile = (dir) => {
 
 const Init = async () => {
 
-    require('./Database/Init')();
+    await require('./Database/Init')();
+    process.s = new (require('./Database/UserManager'))();
 
     const routes = fs.readdirSync(__dirname + '/Routes');
     routes.forEach(route => {
