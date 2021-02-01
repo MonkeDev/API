@@ -69,7 +69,7 @@ module.exports = async (bot, msg) => {
             allUsers.push(user);
         });
 
-        allUsers = await users.schema.find();
+        // allUsers = await users.schema.find();
         allUsers = allUsers.sort((a, b) => b.stats.total-a.stats.total);
         allUsers = allUsers.slice(0, 17);
         let desc = '';
