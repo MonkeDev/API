@@ -30,7 +30,7 @@ module.exports = async (req, res, next) => {
     } else {
         let endData = await endPoints.get(endPoint);
         if(!endData) {
-            endPoints.set(endPoint, { max: 500, used: 0 });
+            endPoints.set(endPoint, { max: 100, used: 0 });
             endData = await endPoints.get(endPoint);
         };
         
