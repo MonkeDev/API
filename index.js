@@ -13,7 +13,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 
-app.use('/static', express.static('public'));
+app.use(express.static('public'));
 
 app.use((req, res, next) => {
     const parsedQs = querystring.parse(url.parse('https://api.monke.vip' + req.originalUrl).query);
