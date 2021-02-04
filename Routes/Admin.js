@@ -54,7 +54,16 @@ router.get('/user/info', async (req, res) => {
     const userData = await users.getID(userID);
 
     return res.json(userData);
-})
+});
+
+router.get('/users', (req, res) => {
+    const allUsers = []
+    await process.s.cache.id.forEach(user => {
+        allUsers.push(user);
+    });
+
+    res.json(allUsers);
+});
 
 module.exports = {
     end: '/admin/',

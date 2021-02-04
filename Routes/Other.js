@@ -152,7 +152,6 @@ router.get('/gav', async (req, res) => {
     const Canvas = canvas.createCanvas(gav.width, gav.height);
     const ctx = Canvas.getContext('2d');
     ctx.drawImage(gav, 0, 0, Canvas.width, Canvas.height);
-    console.log(gav.height, gav.width)
     ctx.drawImage(toPlace, 270, 70, 60, 60);
 
 
