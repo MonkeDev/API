@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const { Client } = require('eris');
 const bot = new Client();
+const canvas = require('canvas');
+const path = require('path');
 
 
 /**
@@ -97,6 +99,66 @@ router.post('/top.gg_vote', (req, res) => {
     res.status(200).json({message: 'Sent'});
 });
 
+
+let gavCahce;
+/**
+ * @swagger
+ * /other/gav:
+ *   get:
+ *     description: Gav
+ *     tags: [Other]
+ *     parameters:
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *       - name: imgUrl
+ *         description: The url of the image to place on gav.
+ *         in: query
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+router.get('/gav', async (req, res) => {
+    
+    const imgUrl = req.urlParams.imgUrl;
+
+    if(!imgUrl) return res.json({
+        error: true,
+        message: 'Missing imgUrl param'
+    });
+
+
+    let toPlace;
+    try{
+        toPlace = await canvas.loadImage(imgUrl);
+    } catch (err) {
+        console.log(err)
+        return res.status(400).json({
+            error: true,
+            message: 'Failed to load image.'
+        });
+    };
+
+    let gav;
+    if(gavCahce) gav = gavCahce;
+    else gav = await canvas.loadImage(path.join(__dirname + '../../Assets', 'gav.png'));
+
+
+    const Canvas = canvas.createCanvas(gav.width, gav.height);
+    const ctx = Canvas.getContext('2d');
+    ctx.drawImage(gav, 0, 0, Canvas.width, Canvas.height);
+    console.log(gav.height, gav.width)
+    ctx.drawImage(toPlace, 270, 70, 60, 60);
+
+
+    res.set({'Content-Type': 'image/png'});
+    res.status(200).send(Canvas.toBuffer());
+});
 
 
 module.exports = {

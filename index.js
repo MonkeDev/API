@@ -71,7 +71,6 @@ const Init = async () => {
 
     app.listen(port, () => console.log('on port: ' + port));
 
-    // require('./Discord_bot/bot');
 };
 
 Init();
