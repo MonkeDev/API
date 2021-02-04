@@ -65,6 +65,26 @@ router.get('/users', async (req, res) => {
     res.json(allUsers);
 });
 
+const attachments = require('../Database/Schema').imagesAndGifs;
+
+router.post('/add/attachment', async (req, res) => {
+    const FOR = req.urlParams.FOR;
+    const url = req.urlParams.url;
+    console.log(FOR)
+
+    if(!FOR || !url) return res.status(400).json({error: true, message: 'FOR and url param.'});
+
+    const FORdata = await attachments.findOne({for: FOR});
+    console.log(FORdata)
+    // new attachments({for: 'bird'}).save();
+    if(!FORdata) return res.status(400).json({error: true, message: 'no data for FOR'});
+
+    FORdata.data.push(url);
+    FORdata.save().then(() => {
+        return res.status(200).json({message: `${url} added to ${FOR} data.`});
+    });
+});
+
 module.exports = {
     end: '/admin/',
     router,

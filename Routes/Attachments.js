@@ -28,6 +28,32 @@ router.get('/monkey', async (req, res) => {
     });
 });
 
+/**
+ * @swagger
+ * /attachments/bird:
+ *  get:
+ *    description: Get a random bird image/gif!
+ *    tags: [Attachments]
+ *    parameters:
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *    responses:
+ *      '200':
+ *        description: Success
+ *      '400':
+ *        description: Error
+*/
+
+
+router.get('/bird', async (req, res) => {
+    const data = await db.get('bird');
+    res.status(200).json({
+        url: data.data[Math.floor(Math.random() * data.data.length)]
+    });
+});
+
 
 module.exports = {
     end: '/attachments/',
