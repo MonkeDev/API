@@ -56,7 +56,7 @@ router.get('/user/info', async (req, res) => {
     return res.json(userData);
 });
 
-router.get('/users', (req, res) => {
+router.get('/users', async (req, res) => {
     const allUsers = []
     await process.s.cache.id.forEach(user => {
         allUsers.push(user);
