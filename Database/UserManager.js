@@ -45,7 +45,7 @@ module.exports = class {
 
     doSave(data) {
         if(!data.fromSave) data.fromSave = 0;
-        if(data.fromSave > 5){
+        if(data.fromSave >= 3){
             data.fromSave = null;
             data.save().then(() => data.fromSave = 0);
         } else data.fromSave++;
