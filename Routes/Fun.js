@@ -74,7 +74,7 @@ router.get('/reverse', async (req, res) => {
     });
     
     res.status(200).json({
-            result: content.split().reverse().join('')
+            result: content.split('').reverse().join('')
         });
     });
 
