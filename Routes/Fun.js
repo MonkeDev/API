@@ -66,6 +66,9 @@ router.get('/shuffle', async (req, res) => {
  *         description: Error
  */
 router.get('/reverse', async (req, res) => {
+
+    // https://discord.com/channels/767569427935133736/779441456464003122/808357425341661205
+    
     const content = req.urlParams.content;
 
     if(!content || typeof content !== 'string') return res.status(400).json({
@@ -74,9 +77,10 @@ router.get('/reverse', async (req, res) => {
     });
     
     res.status(200).json({
-            result: content.split('').reverse().join('')
-        });
+        result: content.split('').reverse().join('')
     });
+    
+});
 
 module.exports = {
     end: '/fun/',
