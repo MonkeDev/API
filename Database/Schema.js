@@ -22,9 +22,14 @@ const users = mongo.model('users', new mongo.Schema({
     }
 }));
 
+const fun = mongo.model('fun', new mongo.Schema({
+    for: { type: String },
+    data: { type: Array, default: [] }
+}));
 
 module.exports = {
     imagesAndGifs,
     facts,
-    users
+    users,
+    fun
 }

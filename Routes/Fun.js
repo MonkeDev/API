@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const db = new (require('../Database/Manager'))(require('../Database/Schema').fun);
 
 /**
  * @swagger
@@ -80,6 +81,31 @@ router.get('/reverse', async (req, res) => {
         result: content.split('').reverse().join('')
     });
     
+});
+
+
+/**
+ * @swagger
+ * /fun/8ball:
+ *   get:
+ *     description: Gives a random 8ball responce
+ *     tags: [Fun]
+ *     parameters:
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+router.get('/8ball', async (req, res) => {
+    const data = await db.get('8ball');
+    res.status(200).json({
+        answer: data.data[Math.floor(Math.random() * data.data.length)]
+    });
 });
 
 module.exports = {
