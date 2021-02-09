@@ -2,6 +2,7 @@ const router = require('express').Router();
 const canvas = require('canvas');
 const path = require('path');
 const jimp = require('jimp');
+const gifencoder = require('gifencoder'); 
 
 
 /**
@@ -564,6 +565,136 @@ router.get('/80s', async (req, res) => {
     res.set({'Content-Type': 'image/png'});
     res.status(200).send(Canvas.toBuffer());
     
+});
+
+
+/**
+ * @swagger
+ * /canvas/petpet:
+ *   get:
+ *     description: Generate a petpet gif!
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: imgUrl
+ *         description: The url of the image to pet.
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *       - name: delay
+ *         description: The frame delay in MS, Defualt is 40ms
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+
+const petpetImgs = new Map();
+router.get('/petpet', async (req, res) => {
+
+    const imgUrl = req.urlParams.imgUrl;
+
+    if(!imgUrl) return res.json({
+        error: true,
+        message: 'Missing imgUrl param'
+    });
+
+    let frameDelay = req.urlParams.delay || 40;
+    if(!Number(frameDelay)) return res.json({
+        error: true,
+        message: 'Param delay is not a number'
+    });
+
+
+    let userImg;
+    try{
+        userImg = await canvas.loadImage(imgUrl);
+    } catch (err) {
+        return res.status(400).json({
+            error: true,
+            message: 'Failed to load image.'
+        });
+    };
+
+    let hand1, hand2, hand3, hand4, hand5;
+    hand1 = await petpetImgs.get('hand1');
+    if(!hand1) {
+        hand1 = await canvas.loadImage(path.join(__dirname + '../../Assets', 'hand1.png'));
+        petpetImgs.set('hand1', hand1);
+    };
+
+    hand2 = await petpetImgs.get('hand2');
+    if(!hand2) {
+        hand2 = await canvas.loadImage(path.join(__dirname + '../../Assets', 'hand2.png'));
+        petpetImgs.set('hand2', hand2);
+    };
+    
+    hand3 = await petpetImgs.get('hand3');
+    if(!hand3) {
+        hand3 = await canvas.loadImage(path.join(__dirname + '../../Assets', 'hand3.png'));
+        petpetImgs.set('hand3', hand3);
+    };
+
+    hand4 = await petpetImgs.get('hand4');
+    if(!hand4) {
+        hand4 = await canvas.loadImage(path.join(__dirname + '../../Assets', 'hand4.png'));
+        petpetImgs.set('hand4', hand4);
+    };
+
+    hand5 = await petpetImgs.get('hand5');
+    if(!hand5) {
+        hand5 = await canvas.loadImage(path.join(__dirname + '../../Assets', 'hand5.png'));
+        petpetImgs.set('hand5', hand5);
+    };
+
+    const GIF = new gifencoder(400, 400);
+    GIF.start();
+    GIF.setRepeat(0);
+    GIF.setDelay(frameDelay);
+
+    const Canvas = canvas.createCanvas(400, 400);
+    const ctx = Canvas.getContext("2d");
+
+    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(hand1, 0, 0, Canvas.width, Canvas.height);
+    GIF.addFrame(ctx);
+
+    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(hand2, 0, 0, Canvas.width, Canvas.height);
+    GIF.addFrame(ctx);
+
+    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(hand3, 0, 0, Canvas.width, Canvas.height);
+    GIF.addFrame(ctx);
+
+
+    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(hand4, 0, 0, Canvas.width, Canvas.height);
+    GIF.addFrame(ctx);
+
+
+    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(hand5, 0, 0, Canvas.width, Canvas.height);
+    GIF.addFrame(ctx);
+
+    
+    GIF.finish();
+
+    res.set({'Content-Type': 'image/gif'});
+
+    res.send(await GIF.out.getData());
+
+
 });
 
 module.exports = {
