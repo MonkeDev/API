@@ -2,10 +2,10 @@ const router = require('express').Router();
 
 /**
  * @swagger
- * /utils/shuffle:
+ * /fun/shuffle:
  *   get:
  *     description: Randomizes a string
- *     tags: [Utils]
+ *     tags: [Fun]
  *     parameters:
  *       - name: content
  *         description: The content that you want to shuffle
@@ -43,8 +43,42 @@ router.get('/shuffle', async (req, res) => {
         result: arr.join('')
     });
 });
+/**
+ * @swagger
+ * /fun/reverse:
+ *   get:
+ *     description: Reverses a string
+ *     tags: [Fun]
+ *     parameters:
+ *       - name: content
+ *         description: The content that you want to reverse
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+router.get('/reverse', async (req, res) => {
+    const content = req.urlParams.content;
+
+    if(!content || typeof content !== 'string') return res.status(400).json({
+        error: true,
+        message: 'Missing/Invalid content parameter'
+    });
+    
+    res.status(200).json({
+            result: content.split().reverse().join('')
+        });
+    });
 
 module.exports = {
-    end: '/utils/',
+    end: '/fun/',
     router,
 };
