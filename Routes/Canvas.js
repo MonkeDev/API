@@ -588,6 +588,10 @@ router.get('/80s', async (req, res) => {
  *         description: The frame delay in MS, Defualt is 40ms
  *         in: query
  *         type: string
+ *       - name: size
+ *         description: The size of the gif, Default is 300
+ *         in: query
+ *         type: string
  *     responses:
  *       200:
  *         description: Success
@@ -595,9 +599,8 @@ router.get('/80s', async (req, res) => {
  *         description: Error
  */
 
-const petpetImgs = new Map();
+const handCache = [];
 router.get('/petpet', async (req, res) => {
-
     const imgUrl = req.urlParams.imgUrl;
 
     if(!imgUrl) return res.json({
@@ -611,6 +614,20 @@ router.get('/petpet', async (req, res) => {
         message: 'Param delay is not a number'
     });
 
+    let size = req.urlParams.size || 300;
+    if(!Number(size)) return res.json({
+        error: true,
+        message: 'Param size is not a number'
+    });
+    else size = Number(size);
+
+    if(size > 2000) return res.json({
+        error: true,
+        message: 'Param size is greater then 2000'
+    })
+
+    console.log(size);
+
 
     let userImg;
     try{
@@ -622,82 +639,34 @@ router.get('/petpet', async (req, res) => {
         });
     };
 
-    let hand1, hand2, hand3, hand4, hand5;
-    hand1 = await petpetImgs.get('hand1');
-    if(!hand1) {
-        hand1 = await canvas.loadImage(path.join(__dirname + '../../Assets', 'hand1.png'));
-        petpetImgs.set('hand1', hand1);
-    };
-
-    hand2 = await petpetImgs.get('hand2');
-    if(!hand2) {
-        hand2 = await canvas.loadImage(path.join(__dirname + '../../Assets', 'hand2.png'));
-        petpetImgs.set('hand2', hand2);
-    };
-    
-    hand3 = await petpetImgs.get('hand3');
-    if(!hand3) {
-        hand3 = await canvas.loadImage(path.join(__dirname + '../../Assets', 'hand3.png'));
-        petpetImgs.set('hand3', hand3);
-    };
-
-    hand4 = await petpetImgs.get('hand4');
-    if(!hand4) {
-        hand4 = await canvas.loadImage(path.join(__dirname + '../../Assets', 'hand4.png'));
-        petpetImgs.set('hand4', hand4);
-    };
-
-    hand5 = await petpetImgs.get('hand5');
-    if(!hand5) {
-        hand5 = await canvas.loadImage(path.join(__dirname + '../../Assets', 'hand5.png'));
-        petpetImgs.set('hand5', hand5);
-    };
-
-    const GIF = new gifencoder(400, 400);
+    const GIF = new gifencoder(size, size)
     GIF.start();
     GIF.setRepeat(0);
     GIF.setDelay(frameDelay);
 
-    const Canvas = canvas.createCanvas(400, 400);
-    const ctx = Canvas.getContext("2d");
+    const Canvas = canvas.createCanvas(size, size);
+    const ctx = Canvas.getContext('2d');
 
-    ctx.drawImage(userImg, 30, 45, userImg.width <= Canvas.width ? userImg.width-30 : Canvas.width-30, userImg.height <= Canvas.height ? userImg.height-45 : Canvas.height-45);
-    ctx.drawImage(hand1, 0, 0, Canvas.width, Canvas.height);
-    GIF.addFrame(ctx);
+    for (let i = 0; i < 5; i++) {
 
-    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 55, 70, userImg.width <= Canvas.width ? userImg.width-55 : Canvas.width-55, userImg.height <= Canvas.height ? userImg.height-70 : Canvas.height-70);
-    ctx.drawImage(hand2, 0, 0, Canvas.width, Canvas.height);
-    GIF.addFrame(ctx);
+        const j = i < 5 / 2 ? i : 5 - i,
+            width = 0.8 + j * 0.02,
+            height = 0.8 - j * 0.05,
+            offsetX = (1 - width) * 0.5 + 0.1,
+        offsetY = (1 - height) - 0.08;
 
-    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 65, 80, userImg.width <= Canvas.width ? userImg.width-65 : Canvas.width-65, userImg.height <= Canvas.height ? userImg.height-80 : Canvas.height-80);
-    ctx.drawImage(hand3, 0, 0, Canvas.width, Canvas.height);
-    GIF.addFrame(ctx);
+        if(!handCache[i]) handCache.push(await canvas.loadImage(path.join(__dirname + '../../Assets', `hand${i+1}.png`)));
 
+        ctx.drawImage(userImg, size * offsetX, size * offsetY, size * width, size * height);
+        ctx.drawImage(handCache[i], 0, 0, size, size);
+        GIF.addFrame(ctx);
 
-    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 50, 75, userImg.width <= Canvas.width ? userImg.width-50 : Canvas.width-50, userImg.height <= Canvas.height ? userImg.height-75 : Canvas.height-75);
-    ctx.drawImage(hand4, 0, 0, Canvas.width, Canvas.height);
-    GIF.addFrame(ctx);
-
-
-    ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 33, 57, userImg.width <= Canvas.width ? userImg.width-33 : Canvas.width-33, userImg.height <= Canvas.height ? userImg.height-57 : Canvas.height-57);
-    ctx.drawImage(hand5, 0, 0, Canvas.width, Canvas.height);
-    GIF.addFrame(ctx);
-
-    
+        ctx.clearRect(0, 0, size, size);
+    }
     GIF.finish();
 
-    res.set({'Content-Type': 'image/gif'});
-
-    res.send(await GIF.out.getData());
-
-
+    res.set({'Content-Type': 'image/gif'}).send(await GIF.out.getData());
 });
-
-
 // brightness
 
 module.exports = {
