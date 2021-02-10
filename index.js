@@ -16,7 +16,7 @@ const port = process.env.PORT || 8080;
 app.use(express.static('public'));
 
 app.use((req, res, next) => {
-    const parsedQs = querystring.parse(url.parse('https://api.monke.vip' + req.originalUrl).query);
+    const parsedQs = querystring.parse(url.parse('https://api.monkedev.com' + req.originalUrl).query);
     req.urlParams = parsedQs;
     next();
 });
@@ -32,7 +32,7 @@ const swaggerOptions = {
             title: `MonkeDev - API`,
             description: 'The MonkeDev API'
         },
-        servers: ['https://api.monke.vip/']
+        servers: ['https://api.monke.vip/', 'https://api.monkedev.com/']
     },
     apis: [__dirname + '/Routes/*.js']    
 };

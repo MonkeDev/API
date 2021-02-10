@@ -1,4 +1,3 @@
-
 const endPoints = new Map();
 
 module.exports = async (req, res, next) => {
