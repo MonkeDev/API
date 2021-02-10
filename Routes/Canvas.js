@@ -661,29 +661,29 @@ router.get('/petpet', async (req, res) => {
     const Canvas = canvas.createCanvas(400, 400);
     const ctx = Canvas.getContext("2d");
 
-    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 30, 45, Canvas.width, Canvas.height);
     ctx.drawImage(hand1, 0, 0, Canvas.width, Canvas.height);
     GIF.addFrame(ctx);
 
     ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 55, 70, Canvas.width, Canvas.height);
     ctx.drawImage(hand2, 0, 0, Canvas.width, Canvas.height);
     GIF.addFrame(ctx);
 
     ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 65, 80, Canvas.width, Canvas.height);
     ctx.drawImage(hand3, 0, 0, Canvas.width, Canvas.height);
     GIF.addFrame(ctx);
 
 
     ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 50, 75, Canvas.width, Canvas.height);
     ctx.drawImage(hand4, 0, 0, Canvas.width, Canvas.height);
     GIF.addFrame(ctx);
 
 
     ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 33, 57, Canvas.width, Canvas.height);
     ctx.drawImage(hand5, 0, 0, Canvas.width, Canvas.height);
     GIF.addFrame(ctx);
 
@@ -696,6 +696,9 @@ router.get('/petpet', async (req, res) => {
 
 
 });
+
+
+// brightness
 
 module.exports = {
     end: '/canvas/',
