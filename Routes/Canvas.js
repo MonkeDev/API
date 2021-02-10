@@ -661,29 +661,29 @@ router.get('/petpet', async (req, res) => {
     const Canvas = canvas.createCanvas(400, 400);
     const ctx = Canvas.getContext("2d");
 
-    ctx.drawImage(userImg, 30, 45, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 30, 45, userImg.width <= Canvas.width ? userImg.width-30 : Canvas.width-30, userImg.height <= Canvas.height ? userImg.height-45 : Canvas.height-45);
     ctx.drawImage(hand1, 0, 0, Canvas.width, Canvas.height);
     GIF.addFrame(ctx);
 
     ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 55, 70, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 55, 70, userImg.width <= Canvas.width ? userImg.width-55 : Canvas.width-55, userImg.height <= Canvas.height ? userImg.height-70 : Canvas.height-70);
     ctx.drawImage(hand2, 0, 0, Canvas.width, Canvas.height);
     GIF.addFrame(ctx);
 
     ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 65, 80, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 65, 80, userImg.width <= Canvas.width ? userImg.width-65 : Canvas.width-65, userImg.height <= Canvas.height ? userImg.height-80 : Canvas.height-80);
     ctx.drawImage(hand3, 0, 0, Canvas.width, Canvas.height);
     GIF.addFrame(ctx);
 
 
     ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 50, 75, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 50, 75, userImg.width <= Canvas.width ? userImg.width-50 : Canvas.width-50, userImg.height <= Canvas.height ? userImg.height-75 : Canvas.height-75);
     ctx.drawImage(hand4, 0, 0, Canvas.width, Canvas.height);
     GIF.addFrame(ctx);
 
 
     ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(userImg, 33, 57, Canvas.width, Canvas.height);
+    ctx.drawImage(userImg, 33, 57, userImg.width <= Canvas.width ? userImg.width-33 : Canvas.width-33, userImg.height <= Canvas.height ? userImg.height-57 : Canvas.height-57);
     ctx.drawImage(hand5, 0, 0, Canvas.width, Canvas.height);
     GIF.addFrame(ctx);
 
