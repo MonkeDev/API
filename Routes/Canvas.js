@@ -669,6 +669,73 @@ router.get('/petpet', async (req, res) => {
 });
 // brightness
 
+
+/**
+ * @swagger
+ * /canvas/brightness:
+ *   get:
+ *     description: Generate a petpet gif!
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: imgUrl
+ *         description: The url of the image to pet.
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         in: query
+ *         type: string
+ *       - name: val
+ *         description: How bright you want your image from -1 to +1
+ *         in: query
+ *         type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+router.get('/brightness', async (req, res) => {
+    const imgUrl = req.urlParams.imgUrl;
+    let val = req.urlParams.val;
+
+    if(!imgUrl) return res.status(400).json({
+        error: true,
+        message: 'Missing imgUrl param'
+    });
+    if(!val) return res.status(400).json({
+        error: true,
+        message: 'Missing param val'
+    });
+
+    if(!Number(val)) return res.status(400).json({
+        error: true,
+        message: 'Param val is not a number'
+    });
+    else val = Number(val);
+
+    if(val > 1 || val < -1) return res.status(400).json({
+        error: true,
+        message: 'Param val is either bigger then +1 or then smaller then -1'
+    });
+    
+    let img;
+    try{
+        img = await jimp.read(imgUrl);
+    } catch (err) {
+        return res.status(400).json({
+            error: true,
+            message: 'Failed to load image.'
+        });
+    };
+
+    img.brightness(val);
+    res.set({'Content-Type': 'image/png'});
+    res.status(200).send(await img.getBufferAsync('image/png'));
+});
+
 module.exports = {
     end: '/canvas/',
     router,
