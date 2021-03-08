@@ -3,7 +3,6 @@ const canvas = require('canvas');
 const path = require('path');
 const jimp = require('jimp');
 const gifencoder = require('gifencoder'); 
-const captchGen = require('../Helpers/CaptchaGen');
 
 
 /**
