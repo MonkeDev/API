@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
 
 
         if(keyData.ratelimit.used > keyData.ratelimit.max) {
-            return res.json({error: true, message: `You have been ratelimited (${keyData.ratelimit.max}/m), If you want this number higher join our discord server and ask! (https://monke.vip/discord)`})
+            return res.json({error: true, message: `You have been ratelimited (${keyData.ratelimit.max}/m), If you want this number higher join our discord server and ask! (https://monkedev.com/r/discord)`})
         } else {
             keyData.ratelimit.used++;
             setTimeout(() => {
@@ -34,7 +34,7 @@ module.exports = async (req, res, next) => {
         };
         
         if(endData.used > endData.max) {
-            return res.json({error: true, message: `This endPoint is at its max of ${endData.max} request per minute, You can use a API key to bypass this. Join our discord server (https://monke.vip/discord) to get your key for FREE.`});
+            return res.json({error: true, message: `This endPoint is at its max of ${endData.max} request per minute, You can use a API key to bypass this. Join our discord server (https://monkedev.com/r/discord) to get your key for FREE.`});
         } else {
             endData.used++;
             setTimeout(() => {

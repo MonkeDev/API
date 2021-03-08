@@ -1,45 +1,6 @@
 const router = require('express').Router();
 const db = new (require('../Database/Manager'))(require('../Database/Schema').fun);
 
-/**
- * @swagger
- * /fun/chat:
- *   get:
- *     description: Chat with an AI
- *     tags: [Fun]
- *     parameters:
- *       - name: msg
- *         description: The message you want to send to the AI
- *         in: query
- *         required: true
- *         type: string
- *       - name: uid
- *         description: The id of the user
- *         in: query
- *         required: true
- *         type: number
- *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
- *         in: query
- *         type: string
- *     responses:
- *       200:
- *         description: Success
- *       400:
- *         description: Error
- */
-router.get('/chat', async (req, res) => {
-    const { msg, uid } = req.urlParams;
-    if(!msg || typeof msg !== 'string' || !uid) return res.status(400).send({
-        error: true,
-        message: 'Please provide the proper params',
-        usage: 'https://api.monkedev.com/fun/chat?msg=message&uid=user_id'
-    })
-    const result = await (await fetch(`${process.env.apiurl}&msg=${encodeURIComponent(msg)}&uid=${encodeURIComponent(uid)}`)).json();
-    return res.send({
-        response: result.cnt
-    });
-});
 
 /**
  * @swagger
@@ -54,7 +15,7 @@ router.get('/chat', async (req, res) => {
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -97,7 +58,7 @@ router.get('/shuffle', async (req, res) => {
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -132,7 +93,7 @@ router.get('/reverse', async (req, res) => {
  *     tags: [Fun]
  *     parameters:
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:

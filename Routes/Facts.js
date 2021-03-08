@@ -12,7 +12,7 @@ const facts = ['dog', 'cat', 'monkey'];
  *    tags: [Facts]
  *    parameters:
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *    responses:
@@ -26,7 +26,7 @@ const facts = ['dog', 'cat', 'monkey'];
  *    tags: [Facts]
  *    parameters:
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *    responses:
@@ -40,7 +40,7 @@ const facts = ['dog', 'cat', 'monkey'];
  *    tags: [Facts]
  *    parameters:
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *    responses:

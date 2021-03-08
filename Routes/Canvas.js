@@ -3,6 +3,7 @@ const canvas = require('canvas');
 const path = require('path');
 const jimp = require('jimp');
 const gifencoder = require('gifencoder'); 
+const captchGen = require('../Helpers/CaptchaGen');
 
 
 /**
@@ -18,7 +19,7 @@ const gifencoder = require('gifencoder');
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -72,7 +73,7 @@ router.get('/gay', async (req, res) => {
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -118,7 +119,7 @@ router.get('/greyscale', async (req, res) => {
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -164,7 +165,7 @@ router.get('/invert', async (req, res) => {
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -218,7 +219,7 @@ router.get('/sepia', async (req, res) => {
  *         in: query
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -299,7 +300,7 @@ router.get('/resize', async (req, res) => {
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -364,7 +365,7 @@ router.get('/contrast', async (req, res) => {
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -410,7 +411,7 @@ router.get('/dither565', async (req, res) => {
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -459,7 +460,7 @@ router.get('/circle', async (req, res) => {
  *         in: query
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -505,7 +506,7 @@ router.get('/pixelate', async (req, res) => {
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *     responses:
@@ -581,7 +582,7 @@ router.get('/80s', async (req, res) => {
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *       - name: delay
@@ -683,7 +684,7 @@ router.get('/petpet', async (req, res) => {
  *         required: true
  *         type: string
  *       - name: key
- *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
  *         in: query
  *         type: string
  *       - name: val
@@ -720,7 +721,7 @@ router.get('/brightness', async (req, res) => {
         error: true,
         message: 'Param val is either bigger then +1 or then smaller then -1'
     });
-    
+
     let img;
     try{
         img = await jimp.read(imgUrl);
@@ -734,6 +735,18 @@ router.get('/brightness', async (req, res) => {
     img.brightness(val);
     res.set({'Content-Type': 'image/png'});
     res.status(200).send(await img.getBufferAsync('image/png'));
+});
+
+router.get('/captcha', async (req, res) => {
+    const captch = await captchGen();
+
+    res.set({'Content-Type': 'image/png'});
+    res.status(200).send(captch);
+
+})
+const gifImgs = [];
+router.get('/confused', async (req, res) => {
+    
 });
 
 module.exports = {
