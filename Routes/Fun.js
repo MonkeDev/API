@@ -33,7 +33,7 @@ router.get('/chat', async (req, res) => {
     if(!msg || typeof msg !== 'string' || !uid) return res.status(400).send({
         error: true,
         message: 'Please provide the proper params',
-        usage: 'https://api.monkedev.com/chat?msg=message&uid=user_id'
+        usage: 'https://api.monkedev.com/fun/chat?msg=message&uid=user_id'
     })
     const result = await (await fetch(`${process.env.apiurl}&msg=${encodeURIComponent(msg)}&uid=${encodeURIComponent(uid)}`)).json();
     return res.send({
