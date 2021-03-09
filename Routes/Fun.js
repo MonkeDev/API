@@ -41,7 +41,7 @@ const db = new (require('../Database/Manager'))(require('../Database/Schema').fu
         example: 'msg: string, uid: number'
     });
 
-    const result = await (await fetch(`${process.env.apiurl}&msg=${encodeURIComponent(msg)}&uid=${encodeURIComponent(uid)}`)).json();
+    const result = await (await fetch(`${process.env.apiurl}&msg=${msg}&uid=${uid}`)).json();
     return res.send({
         response: result.cnt
     });
