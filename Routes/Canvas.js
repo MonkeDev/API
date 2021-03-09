@@ -33,7 +33,7 @@ router.get('/gay', async (req, res) => {
 
     if(!imgUrl) return res.json({
         error: true,
-        message: 'Missing imgUrl param'
+        message: 'Missing the imgUrl parameter'
     });
 
 
@@ -43,7 +43,7 @@ router.get('/gay', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
     
@@ -86,7 +86,7 @@ router.get('/greyscale', async (req, res) => {
 
     if(!imgUrl) return res.status(400).json({
         error: true,
-        message: 'Missing imgUrl param'
+        message: 'Missing the imgUrl parameter'
     });
 
     let img;
@@ -95,7 +95,7 @@ router.get('/greyscale', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
 
@@ -132,16 +132,16 @@ router.get('/invert', async (req, res) => {
 
     if(!imgUrl) return res.status(400).json({
         error: true,
-        message: 'Missing imgUrl param'
+        message: 'Missing the imgUrl parameter'
     });
 
     let img;
-    try{
+    try {
         img = await jimp.read(imgUrl);
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
 
@@ -178,7 +178,7 @@ router.get('/sepia', async (req, res) => {
 
     if(!imgUrl) return res.status(400).json({
         error: true,
-        message: 'Missing imgUrl param'
+        message: 'Missing the imgUrl parameter'
     });
 
     let img;
@@ -187,7 +187,7 @@ router.get('/sepia', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
 
@@ -232,7 +232,7 @@ router.get('/resize', async (req, res) => {
 
     if(!imgUrl) return res.status(400).json({
         error: true,
-        message: 'Missing imgUrl param'
+        message: 'Missing the imgUrl parameter'
     });
 
     let x = req.urlParams.x;
@@ -240,29 +240,29 @@ router.get('/resize', async (req, res) => {
 
     if(!x && !y) return res.json({
         error: true,
-        message: 'Missing both x and y params, Please give atleast one.'
+        message: 'Missing both the x and y parameters, please provide at least one'
     });
 
     if(y) {
         y = Number(y);
         if(!y) return res.status(400).json({
             error: true,
-            message: 'Param y is not a number.'
+            message: 'Parameter y is not a number type'
         });
         if(y > 2000) return res.status(400).json({
             error: true,
-            message: 'Param y can not be larger then 2000'
+            message: 'Parameter y cannot be larger than 2000'
         });
     };
     if(x) {
         x = Number(x);
         if(!x) return res.status(400).json({
             error: true,
-            message: 'Param x is not a number.'
+            message: 'Parameter x is not a number type'
         });
         if(x > 2000) return res.status(400).json({
             error: true,
-            message: 'Param x can not be larger then 2000'
+            message: 'Parameter x can not be larger than 2000'
         });
     };
 
@@ -272,7 +272,7 @@ router.get('/resize', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
 
@@ -315,23 +315,23 @@ router.get('/contrast', async (req, res) => {
 
     if(!imgUrl) return res.status(400).json({
         error: true,
-        message: 'Missing imgUrl param.'
+        message: 'Missing the imgUrl parameter'
     });
     if(!val) return res.status(400).json({
         error: true,
-        message: 'Missing val param.'
+        message: 'Missing the val parameter'
     });
 
     val = Number(val) || parseInt(val);
     if(val != 0 && !val) return res.status(400).json({
         error: true,
-        message: 'val param is not a number.'
+        message: 'the val parameter is not a number type'
     });
 
     if(val > 1 || val < -1) {
         return res.status(400).json({
             error: true,
-            message: 'val param most have a value of -1 to +1.'
+            message: 'the val parameter must have a value between -1 to +1.'
         });
     };
 
@@ -341,7 +341,7 @@ router.get('/contrast', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
 
@@ -378,7 +378,7 @@ router.get('/dither565', async (req, res) => {
 
     if(!imgUrl) return res.status(400).json({
         error: true,
-        message: 'Missing imgUrl param'
+        message: 'Missing the imgUrl parameter'
     });
 
     let img;
@@ -387,7 +387,7 @@ router.get('/dither565', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
 
@@ -424,7 +424,7 @@ router.get('/circle', async (req, res) => {
 
     if(!imgUrl) return res.status(400).json({
         error: true,
-        message: 'Missing imgUrl param'
+        message: 'Missing the imgUrl parameter'
     });
 
     let img;
@@ -433,7 +433,7 @@ router.get('/circle', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
 
@@ -474,7 +474,7 @@ router.get('/pixelate', async (req, res) => {
 
     if(!imgUrl) return res.status(400).json({
         error: true,
-        message: 'Missing imgUrl param'
+        message: 'Missing the imgUrl parameter'
     });
 
     let img;
@@ -483,7 +483,7 @@ router.get('/pixelate', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
 
@@ -496,7 +496,7 @@ router.get('/pixelate', async (req, res) => {
  * @swagger
  * /canvas/80s:
  *   get:
- *     description: Well idk it just gives off a 80s vibe
+ *     description: This endpoints gives your image an 80s vibe
  *     tags: [Canvas]
  *     parameters:
  *       - name: imgUrl
@@ -519,7 +519,7 @@ router.get('/80s', async (req, res) => {
 
     if(!imgUrl) return res.json({
         error: true,
-        message: 'Missing imgUrl param'
+        message: 'Missing the imgUrl parameter'
     });
 
 
@@ -529,11 +529,9 @@ router.get('/80s', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
-    
-
     
     const Canvas = canvas.createCanvas(userImg.width, userImg.height);
     const ctx = Canvas.getContext('2d');
@@ -541,7 +539,6 @@ router.get('/80s', async (req, res) => {
     ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
 
     const input = ctx.getImageData(0, 0, Canvas.width, Canvas.height);
-
     const output = ctx.createImageData(Canvas.width, Canvas.height);
 
     const w = input.width, h = input.height;
@@ -605,25 +602,25 @@ router.get('/petpet', async (req, res) => {
 
     if(!imgUrl) return res.json({
         error: true,
-        message: 'Missing imgUrl param'
+        message: 'Missing the imgUrl parameter'
     });
 
     let frameDelay = req.urlParams.delay || 40;
     if(!Number(frameDelay)) return res.json({
         error: true,
-        message: 'Param delay is not a number'
+        message: 'The delay parameter is not a number type'
     });
 
     let size = req.urlParams.size || 300;
     if(!Number(size)) return res.json({
         error: true,
-        message: 'Param size is not a number'
+        message: 'The size parameter is not a number type'
     });
     else size = Number(size);
 
     if(size > 2000) return res.json({
         error: true,
-        message: 'Param size is greater then 2000'
+        message: 'The size parameter cannot be greater than 2000'
     })
 
     console.log(size);
@@ -635,7 +632,7 @@ router.get('/petpet', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
 
@@ -703,22 +700,22 @@ router.get('/brightness', async (req, res) => {
 
     if(!imgUrl) return res.status(400).json({
         error: true,
-        message: 'Missing imgUrl param'
+        message: 'Missing the imgUrl parameter'
     });
     if(!val) return res.status(400).json({
         error: true,
-        message: 'Missing param val'
+        message: 'Missing the val parameter'
     });
 
     if(!Number(val)) return res.status(400).json({
         error: true,
-        message: 'Param val is not a number'
+        message: 'The val parameter is not a number type'
     });
     else val = Number(val);
 
     if(val > 1 || val < -1) return res.status(400).json({
         error: true,
-        message: 'Param val is either bigger then +1 or then smaller then -1'
+        message: 'The val parameter must be between -1 to +1'
     });
 
     let img;
@@ -727,7 +724,7 @@ router.get('/brightness', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: true,
-            message: 'Failed to load image.'
+            message: 'Failed to load this image'
         });
     };
 
@@ -741,11 +738,14 @@ router.get('/captcha', async (req, res) => {
 
     res.set({'Content-Type': 'image/png'});
     res.status(200).send(captch);
+});
 
-})
 const gifImgs = [];
 router.get('/confused', async (req, res) => {
-    
+    res.send({
+        nothing: undefined,
+        message: 'You seriously checked out this endpoint'
+    })
 });
 
 module.exports = {
