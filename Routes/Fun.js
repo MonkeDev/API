@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = new (require('../Database/Manager'))(require('../Database/Schema').fun);
-
+const fetch = require('node-fetch').default;
 /**
  * @swagger
  * /fun/chat:
@@ -29,7 +29,8 @@ const db = new (require('../Database/Manager'))(require('../Database/Schema').fu
  *         description: Error
  */
  router.get('/chat', async (req, res) => {
-    const { msg, uid } = req.query;
+    let { msg, uid } = req.query;
+    uid = Number(uid);
     if(!msg || !uid) return res.status(400).send({
         error: true,
         message: 'Please provide the required parameters',
@@ -40,9 +41,9 @@ const db = new (require('../Database/Manager'))(require('../Database/Schema').fu
         message: 'Please provide the proper type for the parameters',
         example: 'msg: string, uid: number'
     });
-
-    const result = await (await fetch(`${process.env.apiurl}&msg=${msg}&uid=${uid}`)).json();
-    return res.send({
+    
+    const result = await (await fetch(`${process.env.chatApiUrl}&msg=${encodeURIComponent(msg)}&uid=${encodeURIComponent(uid)}`)).json();
+    return res.status(200).send({
         response: result.cnt
     });
 });
