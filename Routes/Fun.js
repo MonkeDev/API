@@ -35,7 +35,7 @@ const fetch = require('node-fetch').default;
         error: true,
         message: 'Please provide the message parameter'
     });
-    else if(typeof msg !== 'string' || typeof uid !== 'number') return res.status(400).send({
+    else if(typeof msg !== 'string' || isNaN(uid)) return res.status(400).send({
         error: true,
         message: 'Please provide the proper type for the parameters',
         example: 'msg: string, uid: number'
