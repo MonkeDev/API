@@ -29,12 +29,11 @@ const fetch = require('node-fetch').default;
  *         description: Error
  */
  router.get('/chat', async (req, res) => {
-    let { msg, uid } = req.query;
+    let { msg, uid = 0 } = req.query;
     uid = Number(uid);
-    if(!msg || !uid) return res.status(400).send({
+    if(!msg) return res.status(400).send({
         error: true,
-        message: 'Please provide the required parameters',
-        usage: 'https://api.monkedev.com/chat?msg=message&uid=user_id'
+        message: 'Please provide the message parameter'
     });
     else if(typeof msg !== 'string' || typeof uid !== 'number') return res.status(400).send({
         error: true,
