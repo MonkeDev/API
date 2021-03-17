@@ -8,6 +8,14 @@ module.exports = class {
             key: new Map()
         };
 
+        
+        this.updateCache();
+        setInterval(() => {
+            this.updateCache()
+        }, 10 * 60 * 1000);
+    }
+
+    updateCache() {
         s.find().then(Data => {
             Data.forEach(d => {
                 if(d.ratelimit.used != 0) {
@@ -18,20 +26,7 @@ module.exports = class {
                 if(d.key) this.cache.key.set(d.key, d);
             });
         });
-
-        setInterval(() => {
-            s.find().then(Data => {
-                Data.forEach(d => {
-                    if(d.ratelimit.used != 0) {
-                        d.ratelimit.used = 0;
-                        d.save();
-                    };
-                    this.cache.id.set(d.id, d);
-                    if(d.key) this.cache.key.set(d.key, d);
-                });
-            });
-        }, 120 * 1000);
-    }
+    };
 
     makeKey(length) {
         var result           = '';
@@ -45,7 +40,7 @@ module.exports = class {
 
     doSave(data) {
         if(!data.fromSave) data.fromSave = 0;
-        if(data.fromSave >= 3){
+        if(data.fromSave >= 2){
             data.fromSave = null;
             data.save().then(() => data.fromSave = 0);
         } else data.fromSave++;
