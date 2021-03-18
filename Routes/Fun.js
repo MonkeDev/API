@@ -5,7 +5,7 @@ const fetch = require('node-fetch').default;
  * @swagger
  * /fun/chat:
  *   get:
- *     description: Chat with an AI
+ *     description: Chat with an AI (thanks brainshop.ai)
  *     tags: [Fun]
  *     parameters:
  *       - name: msg
@@ -16,7 +16,7 @@ const fetch = require('node-fetch').default;
  *       - name: uid
  *         description: The id of the user
  *         in: query
- *         required: true
+ *         required: false
  *         type: number
  *       - name: key
  *         description: Your API key, Join our discord server to get one (https://monke.vip/discord)
