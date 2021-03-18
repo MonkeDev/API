@@ -742,12 +742,12 @@ router.get('/brightness', async (req, res) => {
     res.status(200).send(captch);
 });*/
 
-router.get('/confused', async (req, res) => {
+/*router.get('/confused', async (req, res) => {
     res.send({
         nothing: undefined,
         message: 'You seriously checked out this endpoint'
     });
-});
+});*/
 
 module.exports = {
     end: '/canvas/',
