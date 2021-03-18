@@ -8,6 +8,11 @@
         "ecmaVersion": 2019
     },
     "rules": {
+        "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
+        "no-trailing-spaces": "error",
+        "quotes": ["error", "single"],
+        "indent": ["error", "tab"],
+        "spaced-comment": ["error", "always"],
         "semi": [
             "error",
             "always"
@@ -34,6 +39,7 @@
         ],
         "no-unused-vars": [
             "error"
-        ]
+        ],
+        "yoda": "error"
     }
 }
