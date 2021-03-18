@@ -32,4 +32,4 @@ module.exports = {
     facts,
     users,
     fun
-}
+};

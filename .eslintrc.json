@@ -1,0 +1,39 @@
+{
+    "extends": "eslint:recommended",
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 2019
+    },
+    "rules": {
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-empty": [
+            "error",
+            {
+                "allowEmptyCatch": true
+            }
+        ],
+        "no-invalid-regexp": "error",
+        "no-var": "error",
+        "max-nested-callbacks": [
+            "error",
+            {
+                "max": 3
+            }
+        ],
+        "max-statements-per-line": [
+            "error",
+            {
+                "max": 2
+            }
+        ],
+        "no-unused-vars": [
+            "error"
+        ]
+    }
+}

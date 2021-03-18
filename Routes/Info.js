@@ -28,14 +28,14 @@ router.get('/ratelimit', (req, res) => {
     } else {
         const allEnd = [];
         for(let val of req.endPoints) {
-            allEnd.push({endPoint: val[0], max: val[1].max, used: val[1].used})
-        };
+            allEnd.push({endPoint: val[0], max: val[1].max, used: val[1].used});
+        }
 
         return res.status(200).json({
             type: 'shared',
             endPoints: allEnd
         });
-    };
+    }
 });
 
 

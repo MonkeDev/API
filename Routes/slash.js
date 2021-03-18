@@ -17,11 +17,11 @@ router.get('/', (req, res) => {
 
 
 router.get('/', (req, res) => {
-    res.redirect('/docs')
+    res.redirect('/docs');
 });
 router.get('/favicon.ico', (req, res) => {
-    res.sendFile(path.join(__dirname + '../../Assets', 'monke.png'))
-})
+    res.sendFile(path.join(__dirname + '../../Assets', 'monke.png'));
+});
 
 
 module.exports = {
