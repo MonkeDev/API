@@ -62,13 +62,13 @@ const Init = async () => {
         else setFolder(__dirname + '/Routes/' + route);
     });
 
-    app.use((req, res, mext) => {
+    app.use((req, res, next) => {
         if(req.originalUrl.startsWith('/docs/') || req.originalUrl == '/') return next();
         return res.status(404).json({
             error: true,
             message: 'Invalid endPoint'
-        })
-    })
+        });
+    });
 
     app.listen(port, () => console.log('on port: ' + port));
 

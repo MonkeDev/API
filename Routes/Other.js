@@ -76,7 +76,7 @@ router.post('/top.gg_vote', (req, res) => {
         } else {
             message = { 
                 content: req.urlParams.message || `<@!${req.body.user || '000000000000000000'}>, Thank you for voting for <@!${req.body.bot || '000000000000000000'}>!`
-            }
+            };
         }
 
     } catch (err) {
@@ -84,17 +84,17 @@ router.post('/top.gg_vote', (req, res) => {
             error: true,
             message: 'Failed to parse message content.'
         });
-    };
+    }
 
     try {
         bot.executeWebhook(webhookID, webhookToken, message);
     } catch (err) {
-        console.log(err)
+        console.log(err);
         res.status(400).json({
             error: true,
             message: `${err}`
         });
-    };   
+    }
     
     res.status(200).json({message: 'Sent'});
 });
@@ -137,12 +137,12 @@ router.get('/gav', async (req, res) => {
     try{
         toPlace = await canvas.loadImage(imgUrl);
     } catch (err) {
-        console.log(err)
+        console.log(err);
         return res.status(400).json({
             error: true,
             message: 'Failed to load image.'
         });
-    };
+    }
 
     let gav;
     if(gavCahce) gav = gavCahce;

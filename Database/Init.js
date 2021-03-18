@@ -7,11 +7,10 @@ module.exports = async () => {
         useFindAndModify: false
     });
 
-    await new Promise(res => {
+    return new Promise(res => {
         mongo.connection.once('connected', () => {
             console.log('MongoDB connected!');
             res();
         });
-    })
-    
+    }); 
 };
