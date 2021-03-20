@@ -27,9 +27,17 @@ const fun = mongo.model('fun', new mongo.Schema({
     data: { type: Array, default: [] }
 }));
 
+const stats = mongo.model('stats', new mongo.Schema({
+    id: { type: String },
+
+    allTime: { type: Number }
+
+}));
+
 module.exports = {
     imagesAndGifs,
     facts,
     users,
-    fun
+    fun,
+    stats
 };

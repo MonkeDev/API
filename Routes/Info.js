@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const stats = require('../Database/Schema').stats;
 
 /**
  * @swagger
@@ -36,6 +36,40 @@ router.get('/ratelimit', (req, res) => {
             endPoints: allEnd
         });
     }
+});
+
+/**
+ * @swagger
+ * /info:
+ *   get:
+ *     description: Get some info on the API
+ *     tags: [Info]
+ *     parameters:
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
+let allTimeCache;
+router.get('/', async (req, res) => {
+    if(!allTimeCache) {
+        allTimeCache = (await stats.findOne({id: 'me'})).allTime;
+        setTimeout(() => {
+            allTimeCache = null;
+        }, 10 * 1000);
+    };
+    res.status(200).json({
+        req: {
+            allTime: allTimeCache,
+            thisProcess: process.info.total
+        },
+        uptime: process.uptime() * 1000
+    });
 });
 
 

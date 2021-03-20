@@ -5,6 +5,7 @@ const querystring = require('querystring');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const rateLimter = require('./util/RateLimiter');
+const stats = require('./util/Stats');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 
 
 app.use(rateLimter);
+app.use(stats);
 
 app.use(bodyParser.json());
 
@@ -30,7 +32,7 @@ const swaggerOptions = {
 			title: 'MonkeDev - API',
 			description: 'The MonkeDev API'
 		},
-		servers: ['https://api.monke.vip/', 'https://api.monkedev.com/']
+		servers: ['https://api.monkedev.com/']
 	},
 	apis: [__dirname + '/Routes/*.js']
 };
