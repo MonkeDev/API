@@ -36,7 +36,7 @@ router.post('/register', async (req, res) => {
     let userData = await users.getID(userID);
     if (userData) return res.json({
         error: true,
-        message: 'You can\'t register again :person_facepalming:'
+        message: 'You may not register again. If you are using our API bot, type `a!info` for your apikey'
     });
     userData = await users.create(userID);
 
