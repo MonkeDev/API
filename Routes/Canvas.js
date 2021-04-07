@@ -29,33 +29,34 @@ const gifencoder = require('gifencoder');
  */
 router.get('/gay', async (req, res) => {
 
-    const imgUrl = req.urlParams.imgUrl;
+	const imgUrl = req.urlParams.imgUrl;
 
-    if (!imgUrl) return res.json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
+	if (!imgUrl) return res.json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
 
 
-    let toLayer;
-    try {
-        toLayer = await canvas.loadImage(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let toLayer;
+	try {
+		toLayer = await canvas.loadImage(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    const gay = await canvas.loadImage(path.join(__dirname + '../../Assets', 'gay.png'));
+	const gay = await canvas.loadImage(path.join(__dirname + '../../Assets', 'gay.png'));
 
-    const Canvas = canvas.createCanvas(toLayer.width, toLayer.height);
-    const ctx = Canvas.getContext('2d');
-    ctx.drawImage(toLayer, 0, 0, Canvas.width, Canvas.height);
-    ctx.drawImage(gay, 0, 0, Canvas.width, Canvas.height);
+	const Canvas = canvas.createCanvas(toLayer.width, toLayer.height);
+	const ctx = Canvas.getContext('2d');
+	ctx.drawImage(toLayer, 0, 0, Canvas.width, Canvas.height);
+	ctx.drawImage(gay, 0, 0, Canvas.width, Canvas.height);
 
-    res.set({ 'Content-Type': 'image/png' });
-    res.status(200).send(Canvas.toBuffer());
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(Canvas.toBuffer());
 });
 
 
@@ -82,26 +83,27 @@ router.get('/gay', async (req, res) => {
  *         description: Error
  */
 router.get('/greyscale', async (req, res) => {
-    const imgUrl = req.urlParams.imgUrl;
+	const imgUrl = req.urlParams.imgUrl;
 
-    if (!imgUrl) return res.status(400).json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
+	if (!imgUrl) return res.status(400).json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
 
-    let img;
-    try {
-        img = await jimp.read(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let img;
+	try {
+		img = await jimp.read(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    img.greyscale();
-    res.set({ 'Content-Type': 'image/png' });
-    res.status(200).send(await img.getBufferAsync('image/png'));
+	img.greyscale();
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(await img.getBufferAsync('image/png'));
 });
 
 
@@ -128,26 +130,27 @@ router.get('/greyscale', async (req, res) => {
  *         description: Error
  */
 router.get('/invert', async (req, res) => {
-    const imgUrl = req.urlParams.imgUrl;
+	const imgUrl = req.urlParams.imgUrl;
 
-    if (!imgUrl) return res.status(400).json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
+	if (!imgUrl) return res.status(400).json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
 
-    let img;
-    try {
-        img = await jimp.read(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let img;
+	try {
+		img = await jimp.read(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    img.invert();
-    res.set({ 'Content-Type': 'image/png' });
-    res.status(200).send(await img.getBufferAsync('image/png'));
+	img.invert();
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(await img.getBufferAsync('image/png'));
 });
 
 
@@ -174,26 +177,27 @@ router.get('/invert', async (req, res) => {
  *         description: Error
  */
 router.get('/sepia', async (req, res) => {
-    const imgUrl = req.urlParams.imgUrl;
+	const imgUrl = req.urlParams.imgUrl;
 
-    if (!imgUrl) return res.status(400).json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
+	if (!imgUrl) return res.status(400).json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
 
-    let img;
-    try {
-        img = await jimp.read(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let img;
+	try {
+		img = await jimp.read(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    img.sepia();
-    res.set({ 'Content-Type': 'image/png' });
-    res.status(200).send(await img.getBufferAsync('image/png'));
+	img.sepia();
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(await img.getBufferAsync('image/png'));
 });
 
 
@@ -228,57 +232,58 @@ router.get('/sepia', async (req, res) => {
  *         description: Error
  */
 router.get('/resize', async (req, res) => {
-    const imgUrl = req.urlParams.imgUrl;
+	const imgUrl = req.urlParams.imgUrl;
 
-    if (!imgUrl) return res.status(400).json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
+	if (!imgUrl) return res.status(400).json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
 
-    let x = req.urlParams.x;
-    let y = req.urlParams.y;
+	let x = req.urlParams.x;
+	let y = req.urlParams.y;
 
-    if (!x && !y) return res.json({
-        error: true,
-        message: 'Missing both the x and y parameters, please provide at least one'
-    });
+	if (!x && !y) return res.json({
+		error: true,
+		message: 'Missing both the x and y parameters, please provide at least one'
+	});
 
-    if (y) {
-        y = Number(y);
-        if (!y) return res.status(400).json({
-            error: true,
-            message: 'Parameter y is not a number type'
-        });
-        if (y > 2000) return res.status(400).json({
-            error: true,
-            message: 'Parameter y cannot be larger than 2000'
-        });
-    }
-    if (x) {
-        x = Number(x);
-        if (!x) return res.status(400).json({
-            error: true,
-            message: 'Parameter x is not a number type'
-        });
-        if (x > 2000) return res.status(400).json({
-            error: true,
-            message: 'Parameter x can not be larger than 2000'
-        });
-    }
+	if (y) {
+		y = Number(y);
+		if (!y) return res.status(400).json({
+			error: true,
+			message: 'Parameter y is not a number type'
+		});
+		if (y > 2000) return res.status(400).json({
+			error: true,
+			message: 'Parameter y cannot be larger than 2000'
+		});
+	}
+	if (x) {
+		x = Number(x);
+		if (!x) return res.status(400).json({
+			error: true,
+			message: 'Parameter x is not a number type'
+		});
+		if (x > 2000) return res.status(400).json({
+			error: true,
+			message: 'Parameter x can not be larger than 2000'
+		});
+	}
 
-    let img;
-    try {
-        img = await jimp.read(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let img;
+	try {
+		img = await jimp.read(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    img.resize(x || jimp.AUTO, y || jimp.AUTO);
-    res.set({ 'Content-Type': 'image/png' });
-    res.status(200).send(await img.getBufferAsync('image/png'));
+	img.resize(x || jimp.AUTO, y || jimp.AUTO);
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(await img.getBufferAsync('image/png'));
 });
 
 /**
@@ -310,44 +315,45 @@ router.get('/resize', async (req, res) => {
  */
 router.get('/contrast', async (req, res) => {
 
-    const imgUrl = req.urlParams.imgUrl;
-    let val = req.urlParams.val;
+	const imgUrl = req.urlParams.imgUrl;
+	let val = req.urlParams.val;
 
-    if (!imgUrl) return res.status(400).json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
-    if (!val) return res.status(400).json({
-        error: true,
-        message: 'Missing the val parameter'
-    });
+	if (!imgUrl) return res.status(400).json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
+	if (!val) return res.status(400).json({
+		error: true,
+		message: 'Missing the val parameter'
+	});
 
-    val = Number(val) || parseInt(val);
-    if (val != 0 && !val) return res.status(400).json({
-        error: true,
-        message: 'the val parameter is not a number type'
-    });
+	val = Number(val) || parseInt(val);
+	if (val != 0 && !val) return res.status(400).json({
+		error: true,
+		message: 'the val parameter is not a number type'
+	});
 
-    if (val > 1 || val < -1) {
-        return res.status(400).json({
-            error: true,
-            message: 'the val parameter must have a value between -1 to +1.'
-        });
-    }
+	if (val > 1 || val < -1) {
+		return res.status(400).json({
+			error: true,
+			message: 'the val parameter must have a value between -1 to +1.'
+		});
+	}
 
-    let img;
-    try {
-        img = await jimp.read(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let img;
+	try {
+		img = await jimp.read(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    img.contrast(val);
-    res.set({ 'Content-Type': 'image/png' });
-    res.status(200).send(await img.getBufferAsync('image/png'));
+	img.contrast(val);
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(await img.getBufferAsync('image/png'));
 
 });
 
@@ -374,26 +380,27 @@ router.get('/contrast', async (req, res) => {
  *         description: Error
  */
 router.get('/dither565', async (req, res) => {
-    const imgUrl = req.urlParams.imgUrl;
+	const imgUrl = req.urlParams.imgUrl;
 
-    if (!imgUrl) return res.status(400).json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
+	if (!imgUrl) return res.status(400).json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
 
-    let img;
-    try {
-        img = await jimp.read(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let img;
+	try {
+		img = await jimp.read(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    img.dither565();
-    res.set({ 'Content-Type': 'image/png' });
-    res.status(200).send(await img.getBufferAsync('image/png'));
+	img.dither565();
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(await img.getBufferAsync('image/png'));
 });
 
 
@@ -420,26 +427,27 @@ router.get('/dither565', async (req, res) => {
  *         description: Error
  */
 router.get('/circle', async (req, res) => {
-    const imgUrl = req.urlParams.imgUrl;
+	const imgUrl = req.urlParams.imgUrl;
 
-    if (!imgUrl) return res.status(400).json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
+	if (!imgUrl) return res.status(400).json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
 
-    let img;
-    try {
-        img = await jimp.read(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let img;
+	try {
+		img = await jimp.read(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    img.circle();
-    res.set({ 'Content-Type': 'image/png' });
-    res.status(200).send(await img.getBufferAsync('image/png'));
+	img.circle();
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(await img.getBufferAsync('image/png'));
 });
 
 /**
@@ -469,27 +477,28 @@ router.get('/circle', async (req, res) => {
  *         description: Error
  */
 router.get('/pixelate', async (req, res) => {
-    const imgUrl = req.urlParams.imgUrl;
-    const val = req.urlParams.val;
+	const imgUrl = req.urlParams.imgUrl;
+	const val = req.urlParams.val;
 
-    if (!imgUrl) return res.status(400).json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
+	if (!imgUrl) return res.status(400).json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
 
-    let img;
-    try {
-        img = await jimp.read(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let img;
+	try {
+		img = await jimp.read(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    img.pixelate(Number(val) || 10);
-    res.set({ 'Content-Type': 'image/png' });
-    res.status(200).send(await img.getBufferAsync('image/png'));
+	img.pixelate(Number(val) || 10);
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(await img.getBufferAsync('image/png'));
 });
 
 /**
@@ -515,52 +524,53 @@ router.get('/pixelate', async (req, res) => {
  *         description: Error
  */
 router.get('/80s', async (req, res) => {
-    const imgUrl = req.urlParams.imgUrl;
+	const imgUrl = req.urlParams.imgUrl;
 
-    if (!imgUrl) return res.json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
+	if (!imgUrl) return res.json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
 
 
-    let userImg;
-    try {
-        userImg = await canvas.loadImage(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let userImg;
+	try {
+		userImg = await canvas.loadImage(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    const Canvas = canvas.createCanvas(userImg.width, userImg.height);
-    const ctx = Canvas.getContext('2d');
+	const Canvas = canvas.createCanvas(userImg.width, userImg.height);
+	const ctx = Canvas.getContext('2d');
 
-    ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
+	ctx.drawImage(userImg, 0, 0, Canvas.width, Canvas.height);
 
-    const input = ctx.getImageData(0, 0, Canvas.width, Canvas.height);
-    const output = ctx.createImageData(Canvas.width, Canvas.height);
+	const input = ctx.getImageData(0, 0, Canvas.width, Canvas.height);
+	const output = ctx.createImageData(Canvas.width, Canvas.height);
 
-    const w = input.width, h = input.height;
-    const inputData = input.data;
-    const outputData = output.data;
+	const w = input.width, h = input.height;
+	const inputData = input.data;
+	const outputData = output.data;
 
-    for (let y = 1; y < h - 1; y++) {
-        for (let x = 1; x < w - 1; x++) {
-            for (let c = 0; c < 3; c++) {
-                const i = (y * w + x) * 4 + c;
-                outputData[i] = 127 + -inputData[i - w * 4 - 4] - inputData[i - w * 4] - inputData[i - w * 4 + 4] +
+	for (let y = 1; y < h - 1; y++) {
+		for (let x = 1; x < w - 1; x++) {
+			for (let c = 0; c < 3; c++) {
+				const i = (y * w + x) * 4 + c;
+				outputData[i] = 127 + -inputData[i - w * 4 - 4] - inputData[i - w * 4] - inputData[i - w * 4 + 4] +
                     -inputData[i - 4] + 8 * inputData[i] - inputData[i + 4] +
                     -inputData[i + w * 4 - 4] - inputData[i + w * 4] - inputData[i + w * 4 + 4];
-            }
-            outputData[(y * w + x) * 4 + 3] = 255; // alpha
-        }
-    }
+			}
+			outputData[(y * w + x) * 4 + 3] = 255; // alpha
+		}
+	}
 
-    ctx.putImageData(output, 0, 0);
+	ctx.putImageData(output, 0, 0);
 
-    res.set({ 'Content-Type': 'image/png' });
-    res.status(200).send(Canvas.toBuffer());
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(Canvas.toBuffer());
 
 });
 
@@ -598,71 +608,72 @@ router.get('/80s', async (req, res) => {
 
 const handCache = [];
 router.get('/petpet', async (req, res) => {
-    const imgUrl = req.urlParams.imgUrl;
+	const imgUrl = req.urlParams.imgUrl;
 
-    if (!imgUrl) return res.json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
+	if (!imgUrl) return res.json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
 
-    let frameDelay = req.urlParams.delay || 40;
-    if (!Number(frameDelay)) return res.json({
-        error: true,
-        message: 'The delay parameter is not a number type'
-    });
+	let frameDelay = req.urlParams.delay || 40;
+	if (!Number(frameDelay)) return res.json({
+		error: true,
+		message: 'The delay parameter is not a number type'
+	});
 
-    let size = req.urlParams.size || 300;
-    if (!Number(size)) return res.json({
-        error: true,
-        message: 'The size parameter is not a number type'
-    });
-    else size = Number(size);
+	let size = req.urlParams.size || 300;
+	if (!Number(size)) return res.json({
+		error: true,
+		message: 'The size parameter is not a number type'
+	});
+	else size = Number(size);
 
-    if (size > 2000) return res.json({
-        error: true,
-        message: 'The size parameter cannot be greater than 2000'
-    });
+	if (size > 2000) return res.json({
+		error: true,
+		message: 'The size parameter cannot be greater than 2000'
+	});
 
-    console.log(size);
+	console.log(size);
 
 
-    let userImg;
-    try {
-        userImg = await canvas.loadImage(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let userImg;
+	try {
+		userImg = await canvas.loadImage(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    const GIF = new gifencoder(size, size);
-    GIF.start();
-    GIF.setRepeat(0);
-    GIF.setDelay(frameDelay);
+	const GIF = new gifencoder(size, size);
+	GIF.start();
+	GIF.setRepeat(0);
+	GIF.setDelay(frameDelay);
 
-    const Canvas = canvas.createCanvas(size, size);
-    const ctx = Canvas.getContext('2d');
+	const Canvas = canvas.createCanvas(size, size);
+	const ctx = Canvas.getContext('2d');
 
-    for (let i = 0; i < 5; i++) {
+	for (let i = 0; i < 5; i++) {
 
-        const j = i < 5 / 2 ? i : 5 - i,
-            width = 0.8 + j * 0.02,
-            height = 0.8 - j * 0.05,
-            offsetX = (1 - width) * 0.5 + 0.1,
-            offsetY = (1 - height) - 0.08;
+		const j = i < 5 / 2 ? i : 5 - i,
+			width = 0.8 + j * 0.02,
+			height = 0.8 - j * 0.05,
+			offsetX = (1 - width) * 0.5 + 0.1,
+			offsetY = (1 - height) - 0.08;
 
-        if (!handCache[i]) handCache.push(await canvas.loadImage(path.join(__dirname + '../../Assets', `hand${i + 1}.png`)));
+		if (!handCache[i]) handCache.push(await canvas.loadImage(path.join(__dirname + '../../Assets', `hand${i + 1}.png`)));
 
-        ctx.drawImage(userImg, size * offsetX, size * offsetY, size * width, size * height);
-        ctx.drawImage(handCache[i], 0, 0, size, size);
-        GIF.addFrame(ctx);
+		ctx.drawImage(userImg, size * offsetX, size * offsetY, size * width, size * height);
+		ctx.drawImage(handCache[i], 0, 0, size, size);
+		GIF.addFrame(ctx);
 
-        ctx.clearRect(0, 0, size, size);
-    }
-    GIF.finish();
+		ctx.clearRect(0, 0, size, size);
+	}
+	GIF.finish();
 
-    res.set({ 'Content-Type': 'image/gif' }).send(await GIF.out.getData());
+	res.set({ 'Content-Type': 'image/gif' }).send(await GIF.out.getData());
 });
 // brightness
 
@@ -695,54 +706,84 @@ router.get('/petpet', async (req, res) => {
  *         description: Error
  */
 router.get('/brightness', async (req, res) => {
-    const imgUrl = req.urlParams.imgUrl;
-    let val = req.urlParams.val;
+	const imgUrl = req.urlParams.imgUrl;
+	let val = req.urlParams.val;
 
-    if (!imgUrl) return res.status(400).json({
-        error: true,
-        message: 'Missing the imgUrl parameter'
-    });
-    if (!val) return res.status(400).json({
-        error: true,
-        message: 'Missing the val parameter'
-    });
+	if (!imgUrl) return res.status(400).json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
+	if (!val) return res.status(400).json({
+		error: true,
+		message: 'Missing the val parameter'
+	});
 
-    if (!Number(val)) return res.status(400).json({
-        error: true,
-        message: 'The val parameter is not a number type'
-    });
-    else val = Number(val);
+	if (!Number(val)) return res.status(400).json({
+		error: true,
+		message: 'The val parameter is not a number type'
+	});
+	else val = Number(val);
 
-    if (val > 1 || val < -1) return res.status(400).json({
-        error: true,
-        message: 'The val parameter must be between -1 to +1'
-    });
+	if (val > 1 || val < -1) return res.status(400).json({
+		error: true,
+		message: 'The val parameter must be between -1 to +1'
+	});
 
-    let img;
-    try {
-        img = await jimp.read(imgUrl);
-    } catch (err) {
-        return res.status(400).json({
-            error: true,
-            message: 'Failed to load this image'
-        });
-    }
+	let img;
+	try {
+		img = await jimp.read(imgUrl);
+	}
+	catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
-    img.brightness(val);
-    res.set({ 'Content-Type': 'image/png' });
-    res.status(200).send(await img.getBufferAsync('image/png'));
+	img.brightness(val);
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(await img.getBufferAsync('image/png'));
+});
+
+router.get('/gun', async (req, res) => {
+	const imgURL = req.query.imgUrl;
+
+	let img;
+	try {
+		img = await canvas.loadImage(imgURL);
+	}
+	catch(err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image',
+		});
+	}
+
+	const base = await canvas.loadImage(path.join(__dirname, '../Assets/gun.png'));
+	const Canvas = canvas.createCanvas(img.width, img.height);
+	const ctx = Canvas.getContext('2d');
+
+	ctx.drawImage(img, 0, 0, Canvas.width, Canvas.height);
+
+	const ratio = (img.height / 2) / base.height;
+	const width = base.width * ratio;
+
+	ctx.drawImage(base, img.width - width, img.height - (img.height / 2), width, img.height / 2);
+
+	res.set({ 'Content-Type': 'image/png' });
+	res.status(200).send(Canvas.toBuffer());
 });
 
 // Captchgen is undefined(╯°□°）╯︵ ┻━┻
 
-/*router.get('/captcha', async (req, res) => {
+/* router.get('/captcha', async (req, res) => {
     const captch = await captchGen();
 
     res.set({ 'Content-Type': 'image/png' });
     res.status(200).send(captch);
 });*/
 
-/*router.get('/confused', async (req, res) => {
+/* router.get('/confused', async (req, res) => {
     res.send({
         nothing: undefined,
         message: 'You seriously checked out this endpoint'
@@ -750,6 +791,6 @@ router.get('/brightness', async (req, res) => {
 });*/
 
 module.exports = {
-    end: '/canvas/',
-    router,
+	end: '/canvas/',
+	router,
 };
