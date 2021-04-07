@@ -770,6 +770,11 @@ router.get('/brightness', async (req, res) => {
 router.get('/gun', async (req, res) => {
 	const imgURL = req.query.imgUrl;
 
+    if (!imgURL) return res.status(400).json({
+		error: true,
+		message: 'Missing the imgUrl parameter'
+	});
+
 	let img;
 	try {
 		img = await canvas.loadImage(imgURL);
