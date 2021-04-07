@@ -745,6 +745,28 @@ router.get('/brightness', async (req, res) => {
 	res.status(200).send(await img.getBufferAsync('image/png'));
 });
 
+/**
+ * @swagger
+ * /canvas/gun:
+ *   get:
+ *     description: 🔫
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: imgUrl
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 router.get('/gun', async (req, res) => {
 	const imgURL = req.query.imgUrl;
 
