@@ -7,6 +7,7 @@ const swaggerUI = require('swagger-ui-express');
 const rateLimter = require('./util/RateLimiter');
 const stats = require('./util/Stats');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 	next();
 });
 
+app.use(cors());
 
 app.use(rateLimter);
 app.use(stats);

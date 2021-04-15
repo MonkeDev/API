@@ -19,6 +19,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "canvas": "^2.6.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "eris": "^0.14.0",
     "eslint": "^7.22.0",
