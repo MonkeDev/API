@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const url = require('url');
+const cors = require('cors')
 const querystring = require('querystring');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
@@ -23,7 +24,7 @@ app.use((req, res, next) => {
 
 app.use(rateLimter);
 app.use(stats);
-
+app.use(cors())
 app.use(bodyParser.json());
 
 const swaggerOptions = {
