@@ -3,7 +3,14 @@ const canvas = require('canvas');
 const path = require('path');
 const jimp = require('jimp');
 const gifencoder = require('gifencoder');
+const { fillTextWithTwemoji } = require('node-canvas-with-twemoji');
 
+canvas.registerFont(path.join(__dirname, '../Assets/Fonts/Whitney-Book.ttf'), {
+	family: 'whitney',
+});
+canvas.registerFont(path.join(__dirname, '../Assets/Fonts/whitney-medium.otf'), {
+	family: 'whitneyMedium',
+});
 
 /**
  * @swagger
@@ -770,7 +777,7 @@ router.get('/brightness', async (req, res) => {
 router.get('/gun', async (req, res) => {
 	const imgURL = req.query.imgUrl;
 
-    if (!imgURL) return res.status(400).json({
+	if (!imgURL) return res.status(400).json({
 		error: true,
 		message: 'Missing the imgUrl parameter'
 	});
@@ -799,6 +806,121 @@ router.get('/gun', async (req, res) => {
 
 	res.set({ 'Content-Type': 'image/png' });
 	res.status(200).send(Canvas.toBuffer());
+});
+
+router.get('/fakequote', async (req, res) => {
+	const imgURL = req.query.imgUrl;
+	const text = req.query.text;
+	const username = req.query.text;
+	const roleColour = req.query.roleColour || '#ffffff';
+	let bot = false;
+
+	if(req.query.bot) bot = true;
+
+	if(!imgURL) return res.status(400).json({
+		error: true,
+		message: 'Missing the imgUrl Parameter',
+	});
+
+	if(!text) return res.status(400).json({
+		error: true,
+		message: 'Missing the text parameter'
+	});
+
+	if(!username) return res.status(400).json({
+		error: true,
+		message: 'Missing the username parameter',
+	});
+
+	const board = canvas.createCanvas(1000, 200);
+	const ctx = board.getContext('2d');
+	ctx.font = '38px Whitney';
+
+	const msgWidth = ctx.measureText(text).width;
+	if (155 + msgWidth > board.width) board.width = board.width * (msgWidth / board.width) + 220;
+
+	ctx.fillStyle = '#36393E';
+	ctx.fillRect(0, 0, board.width, board.height);
+
+	ctx.fillStyle = '#ffffff';
+	ctx.textAlign = 'left';
+
+	let x = 166;
+
+	for(const word of text.split(' ')) {
+		ctx.font = '38px whitney';
+		ctx.fillStyle = '#ffffff';
+
+		const width = ctx.measureText(word).width;
+		fillTextWithTwemoji(ctx, word, x, 138);
+		x += width + 6;
+	}
+
+	ctx.fillStyle = '#ffffff';
+	ctx.globalAlpha = 1;
+	ctx.font = '38px whitneyMedium';
+	ctx.fillStyle = roleColour;
+
+	await fillTextWithTwemoji(ctx, username, 165, 85);
+	const usernameWidth = ctx.measureText(username).width;
+
+	ctx.font = '26px whitneyMedium';
+	ctx.fillStyle = '#7a7c80';
+
+	const time = new Date().toLocaleString().split(',')[1].split(':');
+	const ampm = time.splice(2).join('').split(' ')[1];
+
+	if(bot) {
+		ctx.fillText(`Today at${time.join(':')} ${ampm}`, usernameWidth + 255, 85);
+		ctx.fillStyle = '#7289da';
+
+		const x = usernameWidth + 175;
+		const y = 52;
+		const width = 60;
+		const height = 35;
+		const radius = {
+			tl: 8,
+			tr: 8,
+			br: 8,
+			bl: 8,
+		};
+
+		ctx.beginPath();
+		ctx.moveTo(x + radius.tl, );
+		ctx.lineTo(x + width - radius.tr, y);
+		ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+		ctx.lineTo(x + width, y + height - radius.br);
+		ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+		ctx.lineTo(x + radius.bl, y + height);
+		ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+		ctx.lineTo(x, y + radius.tl);
+		ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+		ctx.closePath();
+		ctx.fill();
+
+		ctx.fillStyle = '#ffffff';
+		ctx.font = '23px whitneyMedium';
+		ctx.fillText('BOT', usernameWidth + 184, 78);
+	}
+	else {
+		ctx.fillText(`Today at${time.join(':')} ${ampm}`, usernameWidth + 184, 85);
+	}
+
+	ctx.beginPath();
+	ctx.lineWidth = 1;
+	ctx.arc(90, 100, 50, 0, Math.PI * 2, true);
+	ctx.strokeStyle = '#36393E';
+	ctx.stroke();
+	ctx.closePath();
+	ctx.clip();
+
+	const avatar = await canvas.loadImage(imgURL);
+	ctx.drawImage(avatar, 38, 48, 105, 105);
+
+	return res
+		.status(200)
+		.set({ 'Content-Type': 'image/png'})
+		.send(board.toBuffer());
 });
 
 // Captchgen is undefined(╯°□°）╯︵ ┻━┻

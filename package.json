@@ -27,10 +27,10 @@
     "gifencoder": "^2.0.1",
     "jimp": "^0.16.1",
     "mongoose": "^5.11.13",
+    "node-canvas-with-twemoji": "^0.1.6",
     "node-fetch": "^2.6.1",
     "querystring": "^0.2.0",
     "swagger-jsdoc": "^6.0.1",
     "swagger-ui-express": "^4.1.6"
-  },
-  "devDependencies": {}
+  }
 }
