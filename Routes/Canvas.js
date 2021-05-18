@@ -808,6 +808,48 @@ router.get('/gun', async (req, res) => {
 	res.status(200).send(Canvas.toBuffer());
 });
 
+/**
+ * @swagger
+ * /canvas/fakequote:
+ *   get:
+ *     description: Generate a quote 
+ *     tags: [Canvas]
+ *     parameters:
+ *       - name: imgUrl
+ *         description: The url of the image.
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: text
+ *         description: The text of the quote
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: username
+ *         description: The username of the quote
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: roleColour
+ *         description: The role color of the quote
+ *         in: query
+ *         required: false
+ *         type: string
+ *       - name: bot
+ *         description: If the quoter is a bot
+ *         in: query
+ *         required: false
+ *         type: string
+ *       - name: key
+ *         description: Your API key, Join our discord server to get one (https://monkedev.com/r/discord)
+ *         in: query
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Error
+ */
 router.get('/fakequote', async (req, res) => {
 	const imgURL = req.query.imgUrl;
 	const text = req.query.text;
@@ -831,6 +873,16 @@ router.get('/fakequote', async (req, res) => {
 		error: true,
 		message: 'Missing the username parameter',
 	});
+
+	let avatar;
+	try {
+		avatar = await canvas.loadImage(imgURL);
+	} catch (err) {
+		return res.status(400).json({
+			error: true,
+			message: 'Failed to load this image'
+		});
+	}
 
 	const board = canvas.createCanvas(1000, 200);
 	const ctx = board.getContext('2d');
@@ -913,8 +965,8 @@ router.get('/fakequote', async (req, res) => {
 	ctx.stroke();
 	ctx.closePath();
 	ctx.clip();
+	
 
-	const avatar = await canvas.loadImage(imgURL);
 	ctx.drawImage(avatar, 38, 48, 105, 105);
 
 	return res
