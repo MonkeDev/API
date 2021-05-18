@@ -811,7 +811,7 @@ router.get('/gun', async (req, res) => {
 router.get('/fakequote', async (req, res) => {
 	const imgURL = req.query.imgUrl;
 	const text = req.query.text;
-	const username = req.query.text;
+	const username = req.query.username;
 	const roleColour = req.query.roleColour || '#ffffff';
 	let bot = false;
 
