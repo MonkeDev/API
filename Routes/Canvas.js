@@ -689,7 +689,7 @@ router.get('/petpet', async (req, res) => {
  * @swagger
  * /canvas/brightness:
  *   get:
- *     description: Generate a petpet gif!
+ *     description: Change the brightness of an image!
  *     tags: [Canvas]
  *     parameters:
  *       - name: imgUrl
