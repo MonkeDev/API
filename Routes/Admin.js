@@ -8,7 +8,7 @@ router.use((req, res, next) => {
 router.post('/add', async (req, res) => {
 
     const userID = req.urlParams.userID;
-    if (!userID) return req.json({ error: true, message: 'no userID' });
+    if (!userID) return res.json({ error: true, message: 'no userID' });
 
     const amount = parseInt(req.urlParams.amount) || parseInt(req.urlParams.amout); // oops
     if (!amount) return res.json({ error: true, message: 'no amount' });
@@ -29,7 +29,7 @@ router.post('/add', async (req, res) => {
 router.post('/register', async (req, res) => {
 
     const userID = req.urlParams.userID;
-    if (!userID) return req.json({ error: true, message: 'no userID' });
+    if (!userID) return res.json({ error: true, message: 'no userID' });
 
     const users = process.s;
 
@@ -48,7 +48,7 @@ router.get('/user/info', async (req, res) => {
 
     const userID = req.urlParams.userID;
 
-    if (!userID) return req.json({ error: true, message: 'no userID' });
+    if (!userID) return res.json({ error: true, message: 'no userID' });
 
     const users = process.s;
 
